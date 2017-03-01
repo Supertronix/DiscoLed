@@ -19,10 +19,11 @@ struct led
 
 led * pixels;
 
-led * bandeRouge;
-led * bandeBleue;
-led * bandeVerte;
 led * bandeRougeFramboise;
+led * bandeBleuBlanc;
+
+led couleurBlanc = {255, 255, 255};
+led couleurBleuQuebec = {.vert = 190, .rouge = 36, .bleu = 240};
 
 led couleurRouge = {0, 255, 0};
 led couleurBleu = {0, 0, 255};
@@ -40,6 +41,7 @@ void setup() {
   anneau.setOutput(PIN);
 
   bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
+  bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
 }
 
 /*
@@ -62,15 +64,32 @@ led creerCouleur(int vert, int rouge, int bleu)
 led * creerBandeCouleurUnie(led couleur)
 {
   led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
-  for(int position = 0; position < LED_NOMBRE; position++){
+  for(int position = 0; position < LED_NOMBRE; position++)
+  {
     bandeCouleur[position] = couleur;
+  }
+  return bandeCouleur;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : Bande de couleur, couleur du led
+ */
+led * creerBandeCouleurAlternee(led couleur1, led couleur2)
+{
+  led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
+  for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
+  {
+    bandeCouleur[position] = couleur1;
+    bandeCouleur[position+1] = couleur2;
+    
   }
   return bandeCouleur;
 }
 
 void loop() {
   delay(1000);
-  pixels = bandeRougeFramboise;
+  pixels = bandeBleuBlanc;
   Serial.println("Allo de Nadine");
   //anneau.set_crgb_at(2, couleur);
   *port_reg |= masque;
