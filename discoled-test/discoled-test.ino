@@ -24,7 +24,8 @@ led * bandeBleuBlanc;
 led * bandeBlancBleu;
 
 led couleurBlanc = {255, 255, 255};
-led couleurBleuQuebec = {.vert = 190, .rouge = 36, .bleu = 240};
+led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
+led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
 
 led couleurRouge = {0, 255, 0};
 led couleurBleu = {0, 0, 255};
