@@ -20,6 +20,8 @@ struct led
 led * pixels;
 
 led * bandeRougeFramboise;
+led * bandeBlanche;
+
 led * bandeBleuBlanc;
 led * bandeBlancBleu;
 
@@ -43,6 +45,7 @@ void setup() {
   anneau.setOutput(PIN);
 
   bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
+  bandeBlanche = creerBandeCouleurUnie(couleurBlanc);
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
   bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
 
@@ -94,12 +97,24 @@ led * creerBandeCouleurAlternee(led couleur1, led couleur2)
 
 int tour = 0;
 
+
+
 void loop() {
   tour++;
   delay(300);
-  if(tour%2 == 0) pixels = bandeBlancBleu;
-  else pixels = bandeBleuBlanc;
-  Serial.println("Allo de Nadine");
+  if(tour%20 < 15)
+  {
+    Serial.println("Mode ROTATION_ALTERNEE");
+    if(tour%2 == 0) pixels = bandeBlancBleu;
+    else pixels = bandeBleuBlanc;
+  }
+  else
+  {
+    Serial.println("Mode CLIGNOTE");
+    if(tour%2 == 0) pixels = bandeRougeFramboise;
+    else pixels = bandeBlanche;
+    
+  }
   //anneau.set_crgb_at(2, couleur);
   *port_reg |= masque;
   anneau.ws2812_sendarray_mask((uint8_t*)pixels,3*LED_NOMBRE, masque,(uint8_t*) port,(uint8_t*) port_reg); 
