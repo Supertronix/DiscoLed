@@ -21,6 +21,7 @@ led * pixels;
 
 led * bandeRougeFramboise;
 led * bandeBleuBlanc;
+led * bandeBlancBleu;
 
 led couleurBlanc = {255, 255, 255};
 led couleurBleuQuebec = {.vert = 190, .rouge = 36, .bleu = 240};
@@ -42,6 +43,9 @@ void setup() {
 
   bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
+  bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
+
+  pixels = bandeRougeFramboise;
 }
 
 /*
@@ -87,9 +91,13 @@ led * creerBandeCouleurAlternee(led couleur1, led couleur2)
   return bandeCouleur;
 }
 
+int tour = 0;
+
 void loop() {
-  delay(1000);
-  pixels = bandeBleuBlanc;
+  tour++;
+  delay(300);
+  if(tour%2 == 0) pixels = bandeBlancBleu;
+  else pixels = bandeBleuBlanc;
   Serial.println("Allo de Nadine");
   //anneau.set_crgb_at(2, couleur);
   *port_reg |= masque;
