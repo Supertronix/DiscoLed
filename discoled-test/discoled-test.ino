@@ -18,10 +18,6 @@ struct led
   uint8_t bleu;
 };
 
-led * preparerBandeVide(int taille);
-led creerCouleur(int rouge, int vert, int bleue);
-void initialiserBandeCouleur(led * bandeCouleur, led couleur);
-
 led * pixels;
 
 led * bandeRouge;
@@ -45,11 +41,7 @@ void setup() {
   anneau.setOutput(PIN);
 
   couleurRougeFramboise = creerCouleur(242, 39, 144);
-  bandeRougeFramboise = preparerBandeVide(LED_NOMBRE);
-  for(int position = 0; position < LED_NOMBRE; position++){
-    bandeRougeFramboise[position] = couleurRougeFramboise;
-  }
-  //initialiserBandeCouleur(bandeRougeFramboise, couleurRougeFramboise);
+  bandeRougeFramboise = creerBandeCouleur(couleurRougeFramboise);
 }
 
 /*
@@ -69,7 +61,7 @@ led creerCouleur(int rouge, int vert, int bleue)
  * Initialise la couleur des bandes
  * Paramètres : Bande de couleur, couleur du led
  */
-led * initialiserBandeCouleur(led couleur)
+led * creerBandeCouleur(led couleur)
 {
   led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position++){
