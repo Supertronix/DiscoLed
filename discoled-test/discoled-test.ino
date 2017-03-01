@@ -5,8 +5,7 @@
 #include <WS2812.h>
 #define PIN 9
 #define LED_NOMBRE 40
-cRGB couleur;
-cRGB couleurRouge;
+//cRGB couleur;
 uint8_t masque;
 const volatile uint8_t * port;
 volatile uint8_t * port_reg;
@@ -25,11 +24,11 @@ led * bandeBleue;
 led * bandeVerte;
 led * bandeRougeFramboise;
 
-/*led couleurRouge;
-led couleurBleu;
-led couleurVert;
-led couleurJaune;*/
-led couleurRougeFramboise;
+led couleurRouge = {0, 255, 0};
+led couleurBleu = {0, 0, 255};
+led couleurVert = {255, 0, 0};
+led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
+led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 
 WS2812 anneau(LED_NOMBRE);
 
@@ -40,20 +39,19 @@ void setup() {
   port_reg = portModeRegister(digitalPinToPort(PIN));
   anneau.setOutput(PIN);
 
-  couleurRougeFramboise = creerCouleur(242, 39, 144);
-  bandeRougeFramboise = creerBandeCouleur(couleurRougeFramboise);
+  bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
 }
 
 /*
  * Initialise la couleur du led : 
  * Paramètre : couleur du led, niveau de rouge, niveau de vert, niveau de bleu
  */
-led creerCouleur(int rouge, int vert, int bleue)
+led creerCouleur(int vert, int rouge, int bleu)
 {
     led couleur;
     couleur.rouge = rouge;
     couleur.vert = vert;
-    couleur.bleu = bleue;
+    couleur.bleu = bleu;
     return couleur;
 }
 
@@ -61,7 +59,7 @@ led creerCouleur(int rouge, int vert, int bleue)
  * Initialise la couleur des bandes
  * Paramètres : Bande de couleur, couleur du led
  */
-led * creerBandeCouleur(led couleur)
+led * creerBandeCouleurUnie(led couleur)
 {
   led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position++){
