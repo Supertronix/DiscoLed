@@ -1,5 +1,7 @@
 #define USE_HSV
 
+#include <DiscoLed.h>
+
 #include <WS2812.h>
 #define PIN 9
 #define LED_NOMBRE 40
