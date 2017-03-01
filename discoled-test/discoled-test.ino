@@ -102,7 +102,7 @@ int tour = 0;
 void loop() {
   tour++;
   delay(300);
-  if(tour%20 < 15)
+  if(tour%20 < 14)
   {
     Serial.println("Mode ROTATION_ALTERNEE");
     if(tour%2 == 0) pixels = bandeBlancBleu;
