@@ -19,6 +19,8 @@ struct led
 };
 
 led * preparerBandeVide(int taille);
+led creerCouleur(int rouge, int vert, int bleue);
+void initialiserBandeCouleur(led * bandeCouleur, led couleur);
 
 led * pixels;
 
@@ -34,6 +36,7 @@ led couleurJaune;*/
 led couleurRougeFramboise;
 
 WS2812 anneau(LED_NOMBRE);
+
 void setup() {
   Serial.begin(9600);
   masque = digitalPinToBitMask(PIN);
@@ -41,32 +44,38 @@ void setup() {
   port_reg = portModeRegister(digitalPinToPort(PIN));
   anneau.setOutput(PIN);
 
+  couleurRougeFramboise = creerCouleur(242, 39, 144);
+  bandeRougeFramboise = preparerBandeVide(LED_NOMBRE);
+  for(int position = 0; position < LED_NOMBRE; position++){
+    bandeRougeFramboise[position] = couleurRougeFramboise;
+  }
+  //initialiserBandeCouleur(bandeRougeFramboise, couleurRougeFramboise);
+}
+
 /*
  * Initialise la couleur du led : 
  * Paramètre : couleur du led, niveau de rouge, niveau de vert, niveau de bleu
  */
- 
-  initialiserCouleur(couleurRougeFramboise, 242, 39, 144);
+led creerCouleur(int rouge, int vert, int bleue)
+{
+    led couleur;
+    couleur.rouge = rouge;
+    couleur.vert = vert;
+    couleur.bleu = bleue;
+    return couleur;
+}
 
 /*
  * Initialise la couleur des bandes
  * Paramètres : Bande de couleur, couleur du led
  */
- 
-  initialiserBandeCouleur(bandeRougeFramboise, couleurRougeFramboise);
-}
-
-void initialiserCouleur(led couleur, int red, int green, int blue){
-    couleur.rouge = red;
-    couleur.vert = green;
-    couleur.bleu = blue;
-}
-
-void initialiserBandeCouleur(led * bandeCouleur, led couleur){
-  bandeCouleur = preparerBandeVide(LED_NOMBRE);
+led * initialiserBandeCouleur(led couleur)
+{
+  led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position++){
     bandeCouleur[position] = couleur;
   }
+  return bandeCouleur;
 }
 
 void loop() {
