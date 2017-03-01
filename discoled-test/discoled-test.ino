@@ -16,14 +16,20 @@ struct led
   uint8_t bleu;
 };
 
+led * preparerBandeVide(int taille);
+
 led * pixels;
+
 led * bandeRouge;
 led * bandeBleue;
 led * bandeVerte;
+led * bandeRougeFramboise;
 
 led rouge;
 led bleu;
 led vert;
+led jaune;
+led rougeFramboise;
 
 WS2812 anneau(LED_NOMBRE);
 void setup() {
@@ -42,23 +48,36 @@ void setup() {
   vert.rouge = 0;
   vert.bleu = 0;
   vert.vert = 255;
-
-  bandeRouge = (led*)malloc(LED_NOMBRE*3*sizeof(uint8_t));
-  bandeBleue = (led*)malloc(LED_NOMBRE*3*sizeof(uint8_t));
-  bandeVerte = (led*)malloc(LED_NOMBRE*3*sizeof(uint8_t));
+  jaune.rouge = 240;
+  jaune.vert = 250;
+  jaune.bleu = 57;
+  rougeFramboise.rouge = 242;
+  rougeFramboise.vert = 39;
+  rougeFramboise.bleu = 144;
+  
+  bandeRouge = preparerBandeVide(LED_NOMBRE);
+  bandeBleue = preparerBandeVide(LED_NOMBRE);
+  bandeVerte = preparerBandeVide(LED_NOMBRE);
+  bandeRougeFramboise = preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position++) bandeRouge[position] = rouge;
   for(int position = 0; position < LED_NOMBRE; position++) bandeBleue[position] = bleu;
   for(int position = 0; position < LED_NOMBRE; position++) bandeVerte[position] = vert;
+  for(int position = 0; position < LED_NOMBRE; position++) bandeRougeFramboise[position] = rougeFramboise;
 }
 
 void loop() {
   delay(1000);
-  pixels = bandeVerte;
+  pixels = bandeRougeFramboise;
   Serial.println("Allo de Nadine");
   //anneau.set_crgb_at(2, couleur);
   *port_reg |= masque;
   anneau.ws2812_sendarray_mask((uint8_t*)pixels,3*LED_NOMBRE, masque,(uint8_t*) port,(uint8_t*) port_reg); 
   //anneau.sync();
+}
+
+led * preparerBandeVide(int taille)
+{
+  return (led*)malloc(taille*3*sizeof(uint8_t));
 }
 
 
