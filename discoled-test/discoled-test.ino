@@ -1,6 +1,7 @@
 #define USE_HSV
 
 #include <WS2812.h>
+#include <DiscoLed.h>
 #define PIN 9
 #define LED_NOMBRE 40
 cRGB couleur;
@@ -32,6 +33,9 @@ led jaune;
 led rougeFramboise;
 
 WS2812 anneau(LED_NOMBRE);
+
+DiscoLed discoLed();
+
 void setup() {
   Serial.begin(9600);
   masque = digitalPinToBitMask(PIN);
