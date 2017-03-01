@@ -1,7 +1,6 @@
 #define USE_HSV
 
 #include <WS2812.h>
-#include <DiscoLed.h>
 #define PIN 9
 #define LED_NOMBRE 40
 cRGB couleur;
@@ -26,16 +25,13 @@ led * bandeBleue;
 led * bandeVerte;
 led * bandeRougeFramboise;
 
-led rouge;
-led bleu;
-led vert;
-led jaune;
-led rougeFramboise;
+/*led couleurRouge;
+led couleurBleu;
+led couleurVert;
+led couleurJaune;*/
+led couleurRougeFramboise;
 
 WS2812 anneau(LED_NOMBRE);
-
-DiscoLed discoLed();
-
 void setup() {
   Serial.begin(9600);
   masque = digitalPinToBitMask(PIN);
@@ -43,30 +39,32 @@ void setup() {
   port_reg = portModeRegister(digitalPinToPort(PIN));
   anneau.setOutput(PIN);
 
-  rouge.rouge = 255;
-  rouge.vert = 0;
-  rouge.bleu = 0;
-  bleu.rouge = 0;
-  bleu.vert = 0;
-  bleu.bleu = 255;
-  vert.rouge = 0;
-  vert.bleu = 0;
-  vert.vert = 255;
-  jaune.rouge = 240;
-  jaune.vert = 250;
-  jaune.bleu = 57;
-  rougeFramboise.rouge = 242;
-  rougeFramboise.vert = 39;
-  rougeFramboise.bleu = 144;
-  
-  bandeRouge = preparerBandeVide(LED_NOMBRE);
-  bandeBleue = preparerBandeVide(LED_NOMBRE);
-  bandeVerte = preparerBandeVide(LED_NOMBRE);
-  bandeRougeFramboise = preparerBandeVide(LED_NOMBRE);
-  for(int position = 0; position < LED_NOMBRE; position++) bandeRouge[position] = rouge;
-  for(int position = 0; position < LED_NOMBRE; position++) bandeBleue[position] = bleu;
-  for(int position = 0; position < LED_NOMBRE; position++) bandeVerte[position] = vert;
-  for(int position = 0; position < LED_NOMBRE; position++) bandeRougeFramboise[position] = rougeFramboise;
+/*
+ * Initialise la couleur du led : 
+ * Paramètre : couleur du led, niveau de rouge, niveau de vert, niveau de bleu
+ */
+ 
+  initialiserCouleur(couleurRougeFramboise, 242, 39, 144);
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : Bande de couleur, couleur du led
+ */
+ 
+  initialiserBandeCouleur(bandeRougeFramboise, couleurRougeFramboise);
+}
+
+void initialiserCouleur(led couleur, int red, int green, int blue){
+    couleur.rouge = red;
+    couleur.vert = green;
+    couleur.bleu = blue;
+}
+
+void initialiserBandeCouleur(led * bandeCouleur, led couleur){
+  bandeCouleur = preparerBandeVide(LED_NOMBRE);
+  for(int position = 0; position < LED_NOMBRE; position++){
+    bandeCouleur[position] = couleur;
+  }
 }
 
 void loop() {
