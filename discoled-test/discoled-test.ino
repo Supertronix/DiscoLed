@@ -69,7 +69,9 @@ int mode = 0;
 
 int positionActuelle = 0;
 int positionPrecedente = 0;
-int limiteProgrammeA = 10;
+int limiteProgrammeClignote = 10;
+int limiteProgrammePromenade = 58;
+int limiteProgrammeRotation = 80;
 
 void loop() 
 {  
@@ -91,8 +93,11 @@ void loop()
   tour++;
   Serial.print("tour = ");
   Serial.println(tour);
-  if(tour < limiteProgrammeA) mode = 0;
+  if(tour < limiteProgrammeClignote) mode = 0;
   else mode = 1;
+  
+  if(tour > limiteProgrammePromenade) {tour = 0; }
+  
   Serial.print("mode = ");
   Serial.println(mode);
   if(mode == 0) 
@@ -106,9 +111,9 @@ void loop()
   }
   if(mode == 1)
   {
-    delay(100);    
+    delay(50);    
 
-    positionActuelle = (tour-limiteProgrammeA)%24;
+    positionActuelle = (tour-limiteProgrammeClignote)%24;
     positionPrecedente = positionActuelle - 1;
     if(positionPrecedente < 0) positionPrecedente = 24 - 1;
     
