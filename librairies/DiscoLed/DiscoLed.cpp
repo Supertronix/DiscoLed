@@ -12,6 +12,11 @@ DiscoLed::DiscoLed(int nombre, int pin)
 
 }
 
+led * DiscoLed::preparerBandeVide(int taille)
+{
+  return (led*)malloc(taille*3*sizeof(uint8_t));
+}
+
 void DiscoLed::afficher(led* pixels)
 {
 	//anneau->set_crgb_at(2, couleur);

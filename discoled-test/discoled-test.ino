@@ -39,7 +39,7 @@ void setup()
  */
 led * creerBandeCouleurUnie(led couleur)
 {
-  led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
+  led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position++)
   {
     bandeCouleur[position] = couleur;
@@ -53,7 +53,7 @@ led * creerBandeCouleurUnie(led couleur)
  */
 led * creerBandeCouleurAlternee(led couleur1, led couleur2)
 {
-  led * bandeCouleur = preparerBandeVide(LED_NOMBRE);
+  led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
@@ -64,8 +64,6 @@ led * creerBandeCouleurAlternee(led couleur1, led couleur2)
 }
 
 int tour = 0;
-
-
 
 void loop() 
 {
@@ -86,8 +84,5 @@ void loop()
   discoled.afficher(pixels);
 }
 
-led * preparerBandeVide(int taille)
-{
-  return (led*)malloc(taille*3*sizeof(uint8_t));
-}
+
 
