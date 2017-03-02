@@ -10,10 +10,18 @@ struct led
 class DiscoLed
 {
 	
-	
+	protected:
+		uint8_t masque;
+		const volatile uint8_t * port;
+		volatile uint8_t * portMode;
+		WS2812 * anneau;
+		int nombre;
+		int pin;
+
+
 	public:
-	DiscoLed(int);
-	
+		DiscoLed(int nombre, int pin);
+		void afficher(led* pixels);
 
 };
 

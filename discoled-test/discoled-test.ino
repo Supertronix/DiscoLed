@@ -4,10 +4,6 @@
 #define PIN 9
 #define LED_NOMBRE 40
 
-uint8_t masque;
-const volatile uint8_t * port;
-volatile uint8_t * port_reg;
-
 led * pixels;
 
 led * bandeRougeFramboise;
@@ -24,19 +20,11 @@ led couleurVert = {255, 0, 0};
 led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
 led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 
-WS2812 anneau(LED_NOMBRE);
-DiscoLed discoled(LED_NOMBRE);
+DiscoLed discoled(LED_NOMBRE, PIN);
 
 void setup() 
 {
   Serial.begin(9600);
-
-  
-  masque = digitalPinToBitMask(PIN);
-  port = portOutputRegister(digitalPinToPort(PIN));
-  port_reg = portModeRegister(digitalPinToPort(PIN));
-  anneau.setOutput(PIN);
-
   bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
   bandeBlanche = creerBandeCouleurUnie(couleurBlanc);
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
@@ -94,12 +82,8 @@ void loop()
     Serial.println("Mode CLIGNOTE");
     if(tour%2 == 0) pixels = bandeRougeFramboise;
     else pixels = bandeBlanche;
-    
   }
-  //anneau.set_crgb_at(2, couleur);
-  *port_reg |= masque;
-  anneau.ws2812_sendarray_mask((uint8_t*)pixels,3*LED_NOMBRE, masque,(uint8_t*) port,(uint8_t*) port_reg); 
-  //anneau.sync();
+  discoled.afficher(pixels);
 }
 
 led * preparerBandeVide(int taille)
