@@ -4,6 +4,11 @@
 #define PIN 9
 #define LED_NOMBRE 40
 
+#define MODE_TOUR_ROUGE 0
+#define MODE_TOUR_BLANC 1
+#define MODE_TOUR_BLEU 2
+
+
 led * pixels;
 
 led * bandeRougeFramboise;
@@ -11,6 +16,8 @@ led * bandeBlanche;
 led * bandeBleuBlanc;
 led * bandeBlancBleu;
 led * bandeBlanchePixelRouge;
+led * bandeBleu;
+
 
 led couleurBlanc = {255, 255, 255};
 led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
@@ -31,6 +38,8 @@ void setup()
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
   bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
   bandeBlanchePixelRouge = creerBandeCouleurUnie(couleurBlanc);
+  bandeBleu = creerBandeCouleurUnie(couleurBleu);
+
   pixels = bandeRougeFramboise;
 }
 
@@ -69,8 +78,9 @@ int mode = 0;
 
 int positionActuelle = 0;
 int positionPrecedente = 0;
-int limiteProgrammeClignote = 24;
-int limiteProgrammePromenade = 48;
+int limiteProgrammeTourRouge = 24;
+int limiteProgrammeTourBlanc = 48;
+int limiteProgrammeTourBleu = 72;
 
 void loop() 
 {  
@@ -78,13 +88,14 @@ void loop()
  
   Serial.print("tour = ");
   Serial.println(tour);
-  if(tour%48 < limiteProgrammeClignote) mode = 0;
-  else mode = 1; 
+  if(tour%limiteProgrammeTourBleu < limiteProgrammeTourRouge) mode = MODE_TOUR_ROUGE;
+  else if (tour%limiteProgrammeTourBleu < limiteProgrammeTourBlanc)mode = MODE_TOUR_BLANC; 
+  else mode = MODE_TOUR_BLEU;
     
   Serial.print("mode = ");
   Serial.println(mode);
   
-  if(mode == 0) 
+  if(mode == MODE_TOUR_ROUGE) 
   {
     positionActuelle = tour%24;
     
@@ -95,7 +106,7 @@ void loop()
     bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
     pixels = bandeBlanchePixelRouge;
   }
-  if(mode == 1)
+  if(mode == MODE_TOUR_BLANC)
   {
     positionActuelle = tour%24;
     
@@ -104,6 +115,16 @@ void loop()
     Serial.println("Mode PROMENADE");
       
     bandeBlanchePixelRouge[positionActuelle] = couleurBlanc;
+    pixels = bandeBlanchePixelRouge;
+  }
+  if(mode == MODE_TOUR_BLEU){
+    positionActuelle = tour%24;
+    
+    Serial.print("Position actuelle = ");
+    Serial.println(positionActuelle);
+    Serial.println("Mode PROMENADE");
+     
+    bandeBlanchePixelRouge[positionActuelle] = couleurBleu;
     pixels = bandeBlanchePixelRouge;
   }
   
