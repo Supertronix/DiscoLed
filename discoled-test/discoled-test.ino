@@ -54,7 +54,7 @@ void setup() {
 
 /*
  * Initialise la couleur du led : 
- * Paramètre : couleur du led, niveau de rouge, niveau de vert, niveau de bleu
+ * Paramètre : niveau de rouge, niveau de vert, niveau de bleu
  */
 led creerCouleur(int vert, int rouge, int bleu)
 {
@@ -67,7 +67,7 @@ led creerCouleur(int vert, int rouge, int bleu)
 
 /*
  * Initialise la couleur des bandes
- * Paramètres : Bande de couleur, couleur du led
+ * Paramètres : couleur du led
  */
 led * creerBandeCouleurUnie(led couleur)
 {
@@ -81,7 +81,7 @@ led * creerBandeCouleurUnie(led couleur)
 
 /*
  * Initialise la couleur des bandes
- * Paramètres : Bande de couleur, couleur du led
+ * Paramètres : couleurs des led
  */
 led * creerBandeCouleurAlternee(led couleur1, led couleur2)
 {
