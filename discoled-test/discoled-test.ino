@@ -10,6 +10,7 @@ led * bandeRougeFramboise;
 led * bandeBlanche;
 led * bandeBleuBlanc;
 led * bandeBlancBleu;
+led * bandeBlanchePixelRouge;
 
 led couleurBlanc = {255, 255, 255};
 led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
@@ -29,7 +30,7 @@ void setup()
   bandeBlanche = creerBandeCouleurUnie(couleurBlanc);
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
   bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
-
+  bandeBlanchePixelRouge = creerBandeCouleurUnie(couleurBlanc);
   pixels = bandeRougeFramboise;
 }
 
@@ -64,11 +65,16 @@ led * creerBandeCouleurAlternee(led couleur1, led couleur2)
 }
 
 int tour = 0;
+int mode = 0;
+
+int positionActuelle = 0;
+int positionPrecedente = 0;
+int limiteProgrammeA = 10;
 
 void loop() 
-{
-  tour++;
-  delay(300);
+{  
+  /* 
+  PROGRAMME clignote + tourne
   if(tour%20 < 14)
   {
     Serial.println("Mode ROTATION_ALTERNEE");
@@ -81,6 +87,43 @@ void loop()
     if(tour%2 == 0) pixels = bandeRougeFramboise;
     else pixels = bandeBlanche;
   }
+  */
+  tour++;
+  Serial.print("tour = ");
+  Serial.println(tour);
+  if(tour < limiteProgrammeA) mode = 0;
+  else mode = 1;
+  Serial.print("mode = ");
+  Serial.println(mode);
+  if(mode == 0) 
+  {
+    delay(300);    
+    Serial.println("Mode CLIGNOTE");
+  
+    if(tour%2 == 0) pixels = bandeRougeFramboise;
+    else pixels = bandeBlanche;
+    
+  }
+  if(mode == 1)
+  {
+    delay(100);    
+
+    positionActuelle = (tour-limiteProgrammeA)%24;
+    positionPrecedente = positionActuelle - 1;
+    if(positionPrecedente < 0) positionPrecedente = 24 - 1;
+    
+    Serial.print("Position precedente = ");
+    Serial.println(positionPrecedente);
+    Serial.print("Position actuelle = ");
+    Serial.println(positionActuelle);
+    Serial.println("Mode PROMENADE");
+    
+    bandeBlanchePixelRouge[positionPrecedente] = couleurBlanc;    
+    bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
+    pixels = bandeBlanchePixelRouge;
+    
+  }
+  
   discoled.afficher(pixels);
 }
 

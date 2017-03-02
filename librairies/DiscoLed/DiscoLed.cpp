@@ -9,7 +9,6 @@ DiscoLed::DiscoLed(int nombre, int pin)
 	anneau->setOutput(pin);
 	this->pin = pin;
 	this->nombre = nombre;
-
 }
 
 led * DiscoLed::preparerBandeVide(int taille)
