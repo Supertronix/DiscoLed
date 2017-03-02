@@ -36,9 +36,13 @@ led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
 led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 
 WS2812 anneau(LED_NOMBRE);
+DiscoLed discoled(LED_NOMBRE);
 
-void setup() {
+void setup() 
+{
   Serial.begin(9600);
+
+  
   masque = digitalPinToBitMask(PIN);
   port = portOutputRegister(digitalPinToPort(PIN));
   port_reg = portModeRegister(digitalPinToPort(PIN));
@@ -86,7 +90,8 @@ int tour = 0;
 
 
 
-void loop() {
+void loop() 
+{
   tour++;
   delay(300);
   if(tour%20 < 14)
