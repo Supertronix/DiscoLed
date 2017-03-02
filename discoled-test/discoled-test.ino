@@ -91,16 +91,3 @@ led * preparerBandeVide(int taille)
   return (led*)malloc(taille*3*sizeof(uint8_t));
 }
 
-/*
- * Initialise la couleur du led : 
- * Paramètre : niveau de rouge, niveau de vert, niveau de bleu
- */
-led creerCouleur(int vert, int rouge, int bleu)
-{
-    led couleur;
-    couleur.rouge = rouge;
-    couleur.vert = vert;
-    couleur.bleu = bleu;
-    return couleur;
-}
-

@@ -20,3 +20,16 @@ void DiscoLed::afficher(led* pixels)
 	//anneau->sync();
 
 }
+
+/*
+ * Initialise la couleur du led : 
+ * Paramètre : niveau de rouge, niveau de vert, niveau de bleu
+ */
+led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
+{
+    led couleur;
+    couleur.rouge = rouge;
+    couleur.vert = vert;
+    couleur.bleu = bleu;
+    return couleur;
+}
