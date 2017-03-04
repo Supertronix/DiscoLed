@@ -1,11 +1,14 @@
 #include <WS2812.h>
 
-struct led
+struct Led
 { 
   uint8_t vert;
   uint8_t rouge;
   uint8_t bleu;
 };
+
+const Led COULEUR_BLANC = {255, 255, 255};
+
 	
 class DiscoLed
 {
@@ -21,9 +24,9 @@ class DiscoLed
 
 	public:
 		DiscoLed(int nombre, int pin);
-		led * preparerBandeVide(int taille);
-		led * creerBandeCouleurUnie(led couleur);
-		void afficher(led* pixels);
-		led creerCouleur(int rouge, int vert, int bleu);
+		Led * preparerBandeVide(int taille);
+		Led * creerBandeCouleurUnie(Led couleur);
+		void afficher(Led* pixels);
+		Led creerCouleur(int rouge, int vert, int bleu);
 };
 

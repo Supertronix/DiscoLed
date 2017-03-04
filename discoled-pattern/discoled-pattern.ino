@@ -7,24 +7,24 @@
 #define MODE_TOUR_BLEU 2
 
 
-led * pixels;
+Led * pixels;
 
-led * bandeRougeFramboise;
-led * bandeBlanche;
-led * bandeBleuBlanc;
-led * bandeBlancBleu;
-led * bandeBlanchePixelRouge;
-led * bandeBleu;
+Led * bandeRougeFramboise;
+Led * bandeBlanche;
+Led * bandeBleuBlanc;
+Led * bandeBlancBleu;
+Led * bandeBlanchePixelRouge;
+Led * bandeBleu;
 
 
-led couleurBlanc = {255, 255, 255};
-led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
-led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
-led couleurRouge = {0, 255, 0};
-led couleurBleu = {0, 0, 255};
-led couleurVert = {255, 0, 0};
-led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
-led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
+Led couleurBlanc = {255, 255, 255};
+Led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
+Led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
+Led couleurRouge = {0, 255, 0};
+Led couleurBleu = {0, 0, 255};
+Led couleurVert = {255, 0, 0};
+Led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
+Led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 
 DiscoLed discoled(LED_NOMBRE, PIN);
 
@@ -32,10 +32,10 @@ void setup()
 {
   Serial.begin(9600);
   bandeRougeFramboise = discoled.creerBandeCouleurUnie(couleurRougeFramboise);
-  bandeBlanche = discoled.creerBandeCouleurUnie(couleurBlanc);
-  bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
-  bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
-  bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(couleurBlanc);
+  bandeBlanche = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
+  bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, COULEUR_BLANC); 
+  bandeBlancBleu = creerBandeCouleurAlternee(COULEUR_BLANC, couleurBleuQuebec); 
+  bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
   bandeBleu = discoled.creerBandeCouleurUnie(couleurBleu);
 
   pixels = bandeRougeFramboise;
@@ -45,9 +45,9 @@ void setup()
  * Initialise la couleur des bandes
  * Paramètres : couleurs des led
  */
-led * creerBandeCouleurAlternee(led couleur1, led couleur2)
+Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 {
-  led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
+  Led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
   for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
@@ -98,7 +98,7 @@ void loop()
     Serial.println(positionActuelle);
     Serial.println("Mode PROMENADE");
       
-    bandeBlanchePixelRouge[positionActuelle] = couleurBlanc;
+    bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLANC;
     pixels = bandeBlanchePixelRouge;
   }
   if(mode == MODE_TOUR_BLEU){

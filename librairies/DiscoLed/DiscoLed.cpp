@@ -11,14 +11,14 @@ DiscoLed::DiscoLed(int nombre, int pin)
 	this->nombre = nombre;
 }
 
-led * DiscoLed::preparerBandeVide(int taille)
+Led * DiscoLed::preparerBandeVide(int taille)
 {
-  return (led*)malloc(taille*3*sizeof(uint8_t));
+  return (Led*)malloc(taille*3*sizeof(uint8_t));
 }
 
-led * DiscoLed::creerBandeCouleurUnie(led couleur)
+Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
 {
-  led * bandeCouleur = this->preparerBandeVide(this->nombre);
+  Led * bandeCouleur = this->preparerBandeVide(this->nombre);
   for(int position = 0; position < this->nombre; position++)
   {
     bandeCouleur[position] = couleur;
@@ -26,7 +26,7 @@ led * DiscoLed::creerBandeCouleurUnie(led couleur)
   return bandeCouleur;
 }
 
-void DiscoLed::afficher(led* pixels)
+void DiscoLed::afficher(Led* pixels)
 {
 	//anneau->set_crgb_at(2, couleur);
 	*portMode |= masque;
@@ -39,9 +39,9 @@ void DiscoLed::afficher(led* pixels)
  * Initialise la couleur du led : 
  * Paramètre : niveau de rouge, niveau de vert, niveau de bleu
  */
-led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
+Led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
 {
-    led couleur;
+    Led couleur;
     couleur.rouge = rouge;
     couleur.vert = vert;
     couleur.bleu = bleu;
