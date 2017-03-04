@@ -1,12 +1,12 @@
 {
   "name": "DiscoLed",
-  "keywords": "led, driver",
-  "description": "Light weight library to control WS2811/WS2812/WS2812B based LEDS and LED Strings",
-  "include": "light_ws2812_Arduino/light_WS2812",
+  "keywords": "led, driver, ring",
+  "description": "Convivial interface to animate a ring led using a Light weight library to control WS2811/WS2812/WS2812B based LEDS and LED Strings",
+  "include": "WS2812",
   "repository":
   {
     "type": "svn",
-    "url": "https://github.com/cpldcpu/discoled.git/trunk/discoled"
+    "url": "https://github.com/Supertronix/DiscoLed.git/trunk/librairies/DiscoLed"
   },
   "frameworks": "arduino",
   "platforms": "atmelavr"
