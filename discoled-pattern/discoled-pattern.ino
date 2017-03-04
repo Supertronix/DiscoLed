@@ -1,5 +1,3 @@
-#define USE_HSV
-
 #include <DiscoLed.h>
 #define PIN 9
 #define LED_NOMBRE 40
