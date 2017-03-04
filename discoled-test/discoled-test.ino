@@ -12,9 +12,6 @@ Led * bandeBlanchePixelRouge;
 
 Led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
 Led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
-Led couleurRouge = {0, 255, 0};
-Led couleurBleu = {0, 0, 255};
-Led couleurVert = {255, 0, 0};
 Led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
 Led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 
