@@ -16,6 +16,16 @@ led * DiscoLed::preparerBandeVide(int taille)
   return (led*)malloc(taille*3*sizeof(uint8_t));
 }
 
+led * DiscoLed::creerBandeCouleurUnie(led couleur)
+{
+  led * bandeCouleur = this->preparerBandeVide(this->nombre);
+  for(int position = 0; position < this->nombre; position++)
+  {
+    bandeCouleur[position] = couleur;
+  }
+  return bandeCouleur;
+}
+
 void DiscoLed::afficher(led* pixels)
 {
 	//anneau->set_crgb_at(2, couleur);

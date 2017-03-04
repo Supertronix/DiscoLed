@@ -22,6 +22,7 @@ class DiscoLed
 	public:
 		DiscoLed(int nombre, int pin);
 		led * preparerBandeVide(int taille);
+		led * creerBandeCouleurUnie(led couleur);
 		void afficher(led* pixels);
 		led creerCouleur(int rouge, int vert, int bleu);
 };

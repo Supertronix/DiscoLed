@@ -24,12 +24,26 @@ DiscoLed discoled(LED_NOMBRE, PIN);
 void setup() 
 {
   Serial.begin(9600);
-  bandeRougeFramboise = discoled.creerBandeCouleurUnie(couleurRougeFramboise);
-  bandeBlanche = discoled.creerBandeCouleurUnie(couleurBlanc);
+  bandeRougeFramboise = creerBandeCouleurUnie(couleurRougeFramboise);
+  bandeBlanche = creerBandeCouleurUnie(couleurBlanc);
   bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, couleurBlanc); 
   bandeBlancBleu = creerBandeCouleurAlternee(couleurBlanc, couleurBleuQuebec); 
-  bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(couleurBlanc);
+  bandeBlanchePixelRouge = creerBandeCouleurUnie(couleurBlanc);
   pixels = bandeRougeFramboise;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleur du led
+ */
+led * creerBandeCouleurUnie(led couleur)
+{
+  led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
+  for(int position = 0; position < LED_NOMBRE; position++)
+  {
+    bandeCouleur[position] = couleur;
+  }
+  return bandeCouleur;
 }
 
 /*
