@@ -69,51 +69,35 @@ int mode = 0;
 
 int positionActuelle = 0;
 int positionPrecedente = 0;
-int limiteProgrammeClignote = 10;
-int limiteProgrammePromenade = 58;
-int limiteProgrammeRotation = 80;
+
+int LONGUEUR_PROGRAMME_ROTATION_ALTERNEE = 14;
+int LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE = 6;
+int LONGUEUR_PROGRAMME_PROMENAGE_ROUGE = 24;
+int LONGUEUR_PROGRAMME = LONGUEUR_PROGRAMME_ROTATION_ALTERNEE + LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE + LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
 
 void loop() 
 {  
-  /* 
-  PROGRAMME clignote + tourne
-  if(tour%20 < 14)
+  tour++;
+  
+  //PROGRAMME clignote + tourne
+  if(tour%LONGUEUR_PROGRAMME < LONGUEUR_PROGRAMME_ROTATION_ALTERNEE)
   {
+    delay(300);
     Serial.println("Mode ROTATION_ALTERNEE");
     if(tour%2 == 0) pixels = bandeBlancBleu;
     else pixels = bandeBleuBlanc;
   }
+  else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE)
+  {
+    delay(300);
+    Serial.println("Mode CLIGNOTE");
+    if(tour%2 == 0) pixels = bandeRougeFramboise;
+    else pixels = bandeBlanche;
+  }
   else
   {
-    Serial.println("Mode CLIGNOTE");
-    if(tour%2 == 0) pixels = bandeRougeFramboise;
-    else pixels = bandeBlanche;
-  }
-  */
-  tour++;
-  Serial.print("tour = ");
-  Serial.println(tour);
-  if(tour < limiteProgrammeClignote) mode = 0;
-  else mode = 1;
-  
-  if(tour > limiteProgrammePromenade) {tour = 0; }
-  
-  Serial.print("mode = ");
-  Serial.println(mode);
-  if(mode == 0) 
-  {
-    delay(300);    
-    Serial.println("Mode CLIGNOTE");
-  
-    if(tour%2 == 0) pixels = bandeRougeFramboise;
-    else pixels = bandeBlanche;
-    
-  }
-  if(mode == 1)
-  {
     delay(50);    
-
-    positionActuelle = (tour-limiteProgrammeClignote)%24;
+    positionActuelle = (tour%LONGUEUR_PROGRAMME)-LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE;
     positionPrecedente = positionActuelle - 1;
     if(positionPrecedente < 0) positionPrecedente = 24 - 1;
     
@@ -126,9 +110,9 @@ void loop()
     bandeBlanchePixelRouge[positionPrecedente] = couleurBlanc;    
     bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
     pixels = bandeBlanchePixelRouge;
-    
+
   }
-  
+
   discoled.afficher(pixels);
 }
 
