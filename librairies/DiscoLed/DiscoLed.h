@@ -26,7 +26,7 @@ class DiscoLed
 
 	public:
 		DiscoLed(int nombre, int pin);
-		Led * preparerBandeVide(int taille);
+		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
 		void afficher(Led* pixels);
 		Led creerCouleur(int rouge, int vert, int bleu);

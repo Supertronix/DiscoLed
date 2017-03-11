@@ -5,10 +5,7 @@
 #define MODE_ROTATION_ALTERNEE 0
 #define MODE_CLIGNOTE 1
 #define MODE_PROMENADE_ROUGE 2
-//#define MODE_TOUR_ROUGE 3
-//#define MODE_TOUR_BLANC 4
-//#define MODE_TOUR_BLEU 5
-
+#define MODE_TROIS_TOURS 3
 
 Led * pixels;
 
@@ -41,7 +38,7 @@ void setup()
  */
 Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 {
-  Led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
+  Led * bandeCouleur = discoled.preparerBandeVide();
   for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
@@ -60,12 +57,7 @@ int positionPrecedente = 0;
 int LONGUEUR_PROGRAMME_ROTATION_ALTERNEE = 14;
 int LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE = 6;
 int LONGUEUR_PROGRAMME_PROMENAGE_ROUGE = 24;
-
-//int LONGUEUR_PROGRAMME_TOUR_ROUGE = 24;
-//int LONGUEUR_PROGRAMME_TOUR_BLANC = 24;
-//int LONGUEUR_PROGRAMME_TOUR_BLEU = 24;
-//int LONGUEUR_PROGRAMME_TROIS_TOURS = 3*24;
-int LONGUEUR_PROGRAMME_TROIS_TOURS = 0;
+int LONGUEUR_PROGRAMME_TROIS_TOURS = 3*24;
 
 int LONGUEUR_PROGRAMME = LONGUEUR_PROGRAMME_ROTATION_ALTERNEE + LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE + LONGUEUR_PROGRAMME_PROMENAGE_ROUGE + LONGUEUR_PROGRAMME_TROIS_TOURS;
 
@@ -75,10 +67,8 @@ void loop()
 
   if(tour%LONGUEUR_PROGRAMME < LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) mode = MODE_ROTATION_ALTERNEE;
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) mode = MODE_CLIGNOTE;
-  else mode = MODE_PROMENADE_ROUGE;
-  //else if(tour%limiteProgrammeTourBleu < limiteProgrammeTourRouge) mode = MODE_TOUR_ROUGE;
-  //else if (tour%limiteProgrammeTourBleu < limiteProgrammeTourBlanc)mode = MODE_TOUR_BLANC; 
-  //else mode = MODE_TOUR_BLEU;
+  else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) < LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) mode = MODE_PROMENADE_ROUGE;
+  else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) < LONGUEUR_PROGRAMME_TROIS_TOURS) mode = MODE_TROIS_TOURS;
   
   //PROGRAMME clignote + tourne
   if(mode == MODE_ROTATION_ALTERNEE)
@@ -95,7 +85,7 @@ void loop()
     if(tour%2 == 0) pixels = bandeRougeFramboise;
     else pixels = bandeBlanche;
   }
-  else
+  else if(mode == MODE_PROMENADE_ROUGE)
   {
     delay(50);    
     positionActuelle = (tour%LONGUEUR_PROGRAMME)-LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE;
@@ -114,40 +104,43 @@ void loop()
 
   }
 
-/*
-else if(mode == MODE_TOUR_ROUGE) 
-  {
-    positionActuelle = tour%24;
-    
-    Serial.print("Position actuelle = ");
-    Serial.println(positionActuelle);
-    Serial.println("Mode PROMENADE");
+else if(mode == MODE_TROIS_TOURS) 
+{
+    int positionDansMode = tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
+    if(positionDansMode < 24)
+    {
+      positionActuelle = tour%24;
       
-    bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
-    pixels = bandeBlanchePixelRouge;
-  }
-  if(mode == MODE_TOUR_BLANC)
-  {
-    positionActuelle = tour%24;
-    
-    Serial.print("Position actuelle = ");
-    Serial.println(positionActuelle);
-    Serial.println("Mode PROMENADE");
+      Serial.print("Position actuelle = ");
+      Serial.println(positionActuelle);
+      Serial.println("Mode PROMENADE");
+        
+      bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
+      pixels = bandeBlanchePixelRouge;
+    }
+    else if(positionDansMode < 2*24)
+    {
+      positionActuelle = tour%24;
       
-    bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLANC;
-    pixels = bandeBlanchePixelRouge;
+      Serial.print("Position actuelle = ");
+      Serial.println(positionActuelle);
+      Serial.println("Mode PROMENADE");
+        
+      bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLANC;
+      pixels = bandeBlanchePixelRouge;
+    }
+    else
+    {
+      positionActuelle = tour%24;
+      
+      Serial.print("Position actuelle = ");
+      Serial.println(positionActuelle);
+      Serial.println("Mode PROMENADE");
+       
+      bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLEU;
+      pixels = bandeBlanchePixelRouge;
+    }
   }
-  if(mode == MODE_TOUR_BLEU){
-    positionActuelle = tour%24;
-    
-    Serial.print("Position actuelle = ");
-    Serial.println(positionActuelle);
-    Serial.println("Mode PROMENADE");
-     
-    bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLEU;
-    pixels = bandeBlanchePixelRouge;
-  }*/
-
   discoled.afficher(pixels);
 }
 

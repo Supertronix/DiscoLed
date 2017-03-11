@@ -11,14 +11,14 @@ DiscoLed::DiscoLed(int nombre, int pin)
 	this->nombre = nombre;
 }
 
-Led * DiscoLed::preparerBandeVide(int taille)
+Led * DiscoLed::preparerBandeVide()
 {
-  return (Led*)malloc(taille*3*sizeof(uint8_t));
+  return (Led*)malloc(this->nombre*3*sizeof(uint8_t));
 }
 
 Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
 {
-  Led * bandeCouleur = this->preparerBandeVide(this->nombre);
+  Led * bandeCouleur = this->preparerBandeVide();
   for(int position = 0; position < this->nombre; position++)
   {
     bandeCouleur[position] = couleur;

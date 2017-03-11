@@ -28,7 +28,7 @@ void setup()
  */
 Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 {
-  Led * bandeCouleur = discoled.preparerBandeVide(LED_NOMBRE);
+  Led * bandeCouleur = discoled.preparerBandeVide();
   for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
