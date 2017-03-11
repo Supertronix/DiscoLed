@@ -19,6 +19,16 @@ void setup()
 {
   Serial.begin(9600);
   bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
+
+  bandeBlancBleu = discoled.preparerBandeVide();
+  
+  for( int position=0; position < LED_NOMBRE ; position++)
+  {
+        bandeBlancBleu[position] = COULEUR_BLANC;
+        position++;
+        bandeBlancBleu[position] = COULEUR_BLEU;
+  }
+  
   pixels = bandeBlanchePixelRouge;
 }
 
