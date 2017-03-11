@@ -3,7 +3,7 @@
 #define LED_NOMBRE 40
 
 #define MODE_ROTATION_ALTERNEE 0
-#define MODE_CLIGNOTE 1
+#define MODE_CLIGNOTE_ROUGE 1
 #define MODE_PROMENADE_ROUGE 2
 #define MODE_TROIS_TOURS 3
 
@@ -66,7 +66,7 @@ void loop()
   tour++;
 
   if(tour%LONGUEUR_PROGRAMME < LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) mode = MODE_ROTATION_ALTERNEE;
-  else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) mode = MODE_CLIGNOTE;
+  else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) mode = MODE_CLIGNOTE_ROUGE;
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) < LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) mode = MODE_PROMENADE_ROUGE;
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) < LONGUEUR_PROGRAMME_TROIS_TOURS) mode = MODE_TROIS_TOURS;
   
@@ -78,10 +78,10 @@ void loop()
     if(tour%2 == 0) pixels = bandeBlancBleu;
     else pixels = bandeBleuBlanc;
   }
-  else if(mode == MODE_CLIGNOTE)
+  else if(mode == MODE_CLIGNOTE_ROUGE)
   {
     delay(300);
-    Serial.println("Mode CLIGNOTE");
+    Serial.println("Mode CLIGNOTE_ROUGE");
     if(tour%2 == 0) pixels = bandeRougeFramboise;
     else pixels = bandeBlanche;
   }
@@ -103,40 +103,27 @@ void loop()
     pixels = bandeBlanchePixelRouge;
 
   }
-
-else if(mode == MODE_TROIS_TOURS) 
-{
+  else if(mode == MODE_TROIS_TOURS) 
+  {
     int positionDansMode = tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
-    if(positionDansMode < 24)
-    {
-      positionActuelle = tour%24;
+    positionActuelle = positionDansMode%24;
       
-      Serial.print("Position actuelle = ");
-      Serial.println(positionActuelle);
-      Serial.println("Mode PROMENADE");
-        
+    Serial.print("Position actuelle = ");
+    Serial.println(positionActuelle);
+    Serial.println("Mode TROIS TOURS");
+  
+    if(positionDansMode < 24)
+    {        
       bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
       pixels = bandeBlanchePixelRouge;
     }
     else if(positionDansMode < 2*24)
-    {
-      positionActuelle = tour%24;
-      
-      Serial.print("Position actuelle = ");
-      Serial.println(positionActuelle);
-      Serial.println("Mode PROMENADE");
-        
+    {       
       bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLANC;
       pixels = bandeBlanchePixelRouge;
     }
     else
-    {
-      positionActuelle = tour%24;
-      
-      Serial.print("Position actuelle = ");
-      Serial.println(positionActuelle);
-      Serial.println("Mode PROMENADE");
-       
+    {       
       bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLEU;
       pixels = bandeBlanchePixelRouge;
     }
