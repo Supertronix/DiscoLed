@@ -66,6 +66,25 @@ void loop()
   //PROGRAMME clignote + tourne
   if(mode == MODE_ROTATION_ALTERNEE)
   {
+    animerRotationAlternee();
+  }
+  else if(mode == MODE_CLIGNOTE_ROUGE)
+  {
+    animerClignotementRouge();
+  }
+  else if(mode == MODE_PROMENADE_ROUGE)
+  {
+    animerPromenadeRouge();
+  }
+  else if(mode == MODE_TROIS_TOURS) 
+  {
+    animerTroisTours();
+  }
+}
+
+
+void animerRotationAlternee()
+{
     for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_ROTATION_ALTERNEE; positionDansAnimation++)
     {
       delay(300);
@@ -74,10 +93,11 @@ void loop()
       if(positionDansAnimation%2 == 0) pixels = bandeBlancBleu;
       else pixels = bandeBleuBlanc;
       discoled.afficher(pixels);
-    }
-  }
-  else if(mode == MODE_CLIGNOTE_ROUGE)
-  {
+    } 
+}
+
+void animerClignotementRouge()
+{
     for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE; positionDansAnimation++)
     {
       delay(300);
@@ -86,9 +106,10 @@ void loop()
       else pixels = bandeBlanche;
       discoled.afficher(pixels);
     }
-  }
-  else if(mode == MODE_PROMENADE_ROUGE)
-  {
+}
+
+void animerPromenadeRouge()
+{
     for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_PROMENADE_ROUGE; positionDansAnimation++)
     {
       delay(50);    
@@ -106,9 +127,10 @@ void loop()
       pixels = bandeBlanchePixelRouge;
       discoled.afficher(pixels);
     }
-  }
-  else if(mode == MODE_TROIS_TOURS) 
-  {
+}
+
+void animerTroisTours()
+{   
     for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_TROIS_TOURS; positionDansAnimation++)
     {
       delay(50);
@@ -136,7 +158,4 @@ void loop()
       }
       discoled.afficher(pixels);
     }
-  }
 }
-
-

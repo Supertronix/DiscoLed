@@ -38,23 +38,23 @@ DiscoLed discoled(LED_NOMBRE, PIN);
 
 
 int listeModes[4];
+int listeDurees[4];
+
 int positionDansProgramme;
 int positionDansAnimation = 0;
 int numeroAnimation = 0;
-
 int duree;
 
-int listeDurees[4];
 void setup()
 {
-listeModes[0] = MODE_ROTATION_ALTERNEE;
-listeModes[1] = MODE_CLIGNOTE_ROUGE;
-listeModes[2] = MODE_PROMENADE_ROUGE;
-listeModes[3] = MODE_TROIS_TOURS;
-listeDurees[0] = LONGUEUR_PROGRAMME_ROTATION_ALTERNEE;
-listeDurees[1] = LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE;
-listeDurees[2] = LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
-listeDurees[3] = LONGUEUR_PROGRAMME_TROIS_TOURS;
+  listeModes[0] = MODE_ROTATION_ALTERNEE;
+  listeModes[1] = MODE_CLIGNOTE_ROUGE;
+  listeModes[2] = MODE_PROMENADE_ROUGE;
+  listeModes[3] = MODE_TROIS_TOURS;
+  listeDurees[0] = LONGUEUR_PROGRAMME_ROTATION_ALTERNEE;
+  listeDurees[1] = LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE;
+  listeDurees[2] = LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
+  listeDurees[3] = LONGUEUR_PROGRAMME_TROIS_TOURS;
 
   mode = listeModes[numeroAnimation];
   duree = listeDurees[numeroAnimation]; 
