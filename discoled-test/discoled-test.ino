@@ -61,6 +61,18 @@ int LONGUEUR_PROGRAMME_TROIS_TOURS = 3*24;
 
 int LONGUEUR_PROGRAMME = LONGUEUR_PROGRAMME_ROTATION_ALTERNEE + LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE + LONGUEUR_PROGRAMME_PROMENAGE_ROUGE + LONGUEUR_PROGRAMME_TROIS_TOURS;
 
+class Animation
+{
+  int duree;
+};
+
+class Spectacle
+{
+  Animation * listeAnimations;
+  int nombreAnimations;
+  int duree;
+};
+
 void loop() 
 {  
   tour++;
@@ -69,7 +81,7 @@ void loop()
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE) < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) mode = MODE_CLIGNOTE_ROUGE;
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE) < LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) mode = MODE_PROMENADE_ROUGE;
   else if((tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE) < LONGUEUR_PROGRAMME_TROIS_TOURS) mode = MODE_TROIS_TOURS;
-  
+
   //PROGRAMME clignote + tourne
   if(mode == MODE_ROTATION_ALTERNEE)
   {
@@ -91,7 +103,6 @@ void loop()
     positionActuelle = (tour%LONGUEUR_PROGRAMME)-LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE;
     positionPrecedente = positionActuelle - 1;
     if(positionPrecedente < 0) positionPrecedente = 24 - 1;
-    
     Serial.print("Position precedente = ");
     Serial.println(positionPrecedente);
     Serial.print("Position actuelle = ");
@@ -101,10 +112,10 @@ void loop()
     bandeBlanchePixelRouge[positionPrecedente] = COULEUR_BLANC;    
     bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
     pixels = bandeBlanchePixelRouge;
-
   }
   else if(mode == MODE_TROIS_TOURS) 
   {
+    delay(50);
     int positionDansMode = tour%LONGUEUR_PROGRAMME - LONGUEUR_PROGRAMME_ROTATION_ALTERNEE - LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE - LONGUEUR_PROGRAMME_PROMENAGE_ROUGE;
     positionActuelle = positionDansMode%24;
       
