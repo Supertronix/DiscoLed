@@ -32,3 +32,29 @@ class DiscoLed
 		Led creerCouleur(int rouge, int vert, int bleu);
 };
 
+class Animation
+{
+	public:
+		int duree;
+		void (*animer)();
+};
+
+class Spectacle
+{
+  protected:
+    Animation ** listeAnimations;
+	DiscoLed * discoled;
+    int nombreAnimations;
+    int capaciteAnimations;
+    int duree;
+	int animationCourante;
+
+  public:
+    Spectacle();
+    Spectacle(DiscoLed *);
+    void ajouterAnimation(Animation *);
+	void jouerAnimation();
+	void sauterAnimation();
+};
+
+

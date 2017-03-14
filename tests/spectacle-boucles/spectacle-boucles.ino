@@ -2,11 +2,6 @@
 #define PIN 9
 #define LED_NOMBRE 40
 
-#define MODE_ROTATION_ALTERNEE 0
-#define MODE_CLIGNOTE_ROUGE 1
-#define MODE_PROMENADE_ROUGE 2
-#define MODE_TROIS_TOURS 3
-
 Led * pixels;
 
 Led * bandeRougeFramboise;
@@ -19,73 +14,19 @@ Led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
 Led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
 Led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
 Led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
-DiscoLed discoled(LED_NOMBRE, PIN);
-
-void setup() 
-{
-  Serial.begin(9600);
-  bandeRougeFramboise = discoled.creerBandeCouleurUnie(couleurRougeFramboise);
-  bandeBlanche = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
-  bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, COULEUR_BLANC); 
-  bandeBlancBleu = creerBandeCouleurAlternee(COULEUR_BLANC, couleurBleuQuebec); 
-  bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
-  pixels = bandeRougeFramboise;
-}
-
-/*
- * Initialise la couleur des bandes
- * Paramètres : couleurs des led
- */
-Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
-{
-  Led * bandeCouleur = discoled.preparerBandeVide();
-  for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
-  {
-    bandeCouleur[position] = couleur1;
-    bandeCouleur[position+1] = couleur2;
-    
-  }
-  return bandeCouleur;
-}
-
-int mode = -1;
 
 int positionActuelle = 0;
 int positionPrecedente = 0;
 
-int LONGUEUR_PROGRAMME_ROTATION_ALTERNEE = 14;
-int LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE = 6;
-int LONGUEUR_PROGRAMME_PROMENADE_ROUGE = 24;
 int LONGUEUR_PROGRAMME_TROIS_TOURS = 3*24;
 
-void loop() 
-{  
-  mode++;
-  if(mode > 3) mode = 0;
-
-  //PROGRAMME clignote + tourne
-  if(mode == MODE_ROTATION_ALTERNEE)
-  {
-    animerRotationAlternee();
-  }
-  else if(mode == MODE_CLIGNOTE_ROUGE)
-  {
-    animerClignotementRouge();
-  }
-  else if(mode == MODE_PROMENADE_ROUGE)
-  {
-    animerPromenadeRouge();
-  }
-  else if(mode == MODE_TROIS_TOURS) 
-  {
-    animerTroisTours();
-  }
-}
+DiscoLed discoled(LED_NOMBRE, PIN);
+Spectacle spectacle(&discoled); // peut-etre plutot memoire dynamique
 
 
 void animerRotationAlternee()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_ROTATION_ALTERNEE; positionDansAnimation++)
+    for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
     {
       delay(300);
       Serial.println("Mode ROTATION_ALTERNEE");
@@ -98,7 +39,7 @@ void animerRotationAlternee()
 
 void animerClignotementRouge()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_CLIGNOTE_ROUGE; positionDansAnimation++)
+    for(int positionDansAnimation = 0; positionDansAnimation < 6; positionDansAnimation++)
     {
       delay(300);
       Serial.println("Mode CLIGNOTE_ROUGE");
@@ -110,15 +51,15 @@ void animerClignotementRouge()
 
 void animerPromenadeRouge()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_PROMENADE_ROUGE; positionDansAnimation++)
+    for(int positionDansAnimation = 0; positionDansAnimation < 24; positionDansAnimation++)
     {
       delay(50);    
+      positionPrecedente = positionDansAnimation - 1;
+      if(positionPrecedente < 0) positionPrecedente = 24 - 1;
       Serial.print("Position actuelle = ");
       Serial.println(positionActuelle);
       Serial.println("Mode PROMENADE");
       
-      positionPrecedente = positionDansAnimation - 1;
-      if(positionPrecedente < 0) positionPrecedente = 24 - 1;
       bandeBlanchePixelRouge[positionPrecedente] = COULEUR_BLANC;    
       bandeBlanchePixelRouge[positionDansAnimation] = couleurRougeFramboise;
       pixels = bandeBlanchePixelRouge;
@@ -155,3 +96,60 @@ void animerTroisTours()
       discoled.afficher(pixels);
     }
 }
+
+
+
+
+
+
+
+void setup() 
+{
+  Animation * animationRotationAlternee = new Animation();
+  animationRotationAlternee->animer = animerRotationAlternee;
+  spectacle.ajouterAnimation(animationRotationAlternee);
+  
+  Animation * animationClignotementRouge = new Animation();
+  animationClignotementRouge->animer = animerClignotementRouge;
+  spectacle.ajouterAnimation(animationClignotementRouge);
+ 
+  Animation * animationPromenadeRouge = new Animation();
+  animationPromenadeRouge->animer = animerPromenadeRouge;
+  spectacle.ajouterAnimation(animationPromenadeRouge);
+  
+  Animation * animationTroisTours = new Animation();
+  animationTroisTours->animer = animerTroisTours;
+  spectacle.ajouterAnimation(animationTroisTours);
+  
+  Serial.begin(9600);
+  bandeRougeFramboise = discoled.creerBandeCouleurUnie(couleurRougeFramboise);
+  bandeBlanche = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
+  bandeBleuBlanc = creerBandeCouleurAlternee(couleurBleuQuebec, COULEUR_BLANC); 
+  bandeBlancBleu = creerBandeCouleurAlternee(COULEUR_BLANC, couleurBleuQuebec); 
+  bandeBlanchePixelRouge = discoled.creerBandeCouleurUnie(COULEUR_BLANC);
+  pixels = bandeRougeFramboise;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
+{
+  Led * bandeCouleur = discoled.preparerBandeVide();
+  for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
+  {
+    bandeCouleur[position] = couleur1;
+    bandeCouleur[position+1] = couleur2;
+    
+  }
+  return bandeCouleur;
+}
+
+void loop() 
+{  
+  spectacle.jouerAnimation();
+}
+
+
+

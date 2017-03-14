@@ -47,3 +47,39 @@ Led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
     couleur.bleu = bleu;
     return couleur;
 }
+
+#define TAILLE_SPECTACLE 8
+
+Spectacle::Spectacle()
+{
+	this->capaciteAnimations = TAILLE_SPECTACLE;
+	this->listeAnimations = new Animation *[TAILLE_SPECTACLE]; 
+	this->nombreAnimations = 0;
+	this->animationCourante = 0;
+}
+Spectacle::Spectacle(DiscoLed * discoled)
+{
+	this->discoled = discoled;
+	this->capaciteAnimations = TAILLE_SPECTACLE;
+	this->listeAnimations = new Animation *[TAILLE_SPECTACLE]; 
+	this->nombreAnimations = 0;
+	this->animationCourante = 0;
+}
+void Spectacle::ajouterAnimation(Animation * animation)
+{
+	// TODO : gerer la croissance au-dela de TAILLE_SPECTACLE plus tard
+	this->listeAnimations[nombreAnimations++] = animation;
+}
+void Spectacle::jouerAnimation()
+{
+	if(nombreAnimations < 1) return;
+	
+	this->listeAnimations[animationCourante]->animer();		
+	this->sauterAnimation();
+}
+
+void Spectacle::sauterAnimation()
+{
+	animationCourante++;
+	if(animationCourante > nombreAnimations) animationCourante = 0;
+}
