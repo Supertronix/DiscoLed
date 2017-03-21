@@ -18,8 +18,6 @@ Led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
 int positionActuelle = 0;
 int positionPrecedente = 0;
 
-int LONGUEUR_PROGRAMME_TROIS_TOURS = 3*24;
-
 DiscoLed discoled(LED_NOMBRE, PIN);
 Spectacle spectacle(&discoled); // peut-etre plutot memoire dynamique
 
@@ -69,7 +67,7 @@ void animerPromenadeRouge()
 
 void animerTroisTours()
 {   
-    for(int positionDansAnimation = 0; positionDansAnimation < LONGUEUR_PROGRAMME_TROIS_TOURS; positionDansAnimation++)
+    for(int positionDansAnimation = 0; positionDansAnimation < 3*24; positionDansAnimation++)
     {
       delay(50);
       positionActuelle = positionDansAnimation%24;
