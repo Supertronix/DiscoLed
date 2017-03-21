@@ -1,6 +1,6 @@
 #include <DiscoLed.h>
-#define PIN 2
-#define LED_NOMBRE 40
+#define PIN 3
+#define LED_NOMBRE 60
 
 Led * pixels;
 
@@ -41,9 +41,8 @@ void animerClignotementRouge()
     {
       delay(300);
       Serial.println("Mode CLIGNOTE_ROUGE");
-      if(positionDansAnimation%2 == 0) pixels = bandeRougeFramboise;
-      else pixels = bandeBlanche;
-      discoled.afficher(pixels);
+      if(positionDansAnimation%2 == 0) discoled.afficher(bandeRougeFramboise);
+      else pixels = discoled.afficher(bandeBlanche);
     }
 }
 
@@ -60,8 +59,7 @@ void animerPromenadeRouge()
       
       bandeBlanchePixelRouge[positionPrecedente] = COULEUR_BLANC;    
       bandeBlanchePixelRouge[positionDansAnimation] = couleurRougeFramboise;
-      pixels = bandeBlanchePixelRouge;
-      discoled.afficher(pixels);
+      discoled.afficher(bandeBlanchePixelRouge);
     }
 }
 
@@ -79,19 +77,18 @@ void animerTroisTours()
       if(positionDansAnimation < 24)
       {        
         bandeBlanchePixelRouge[positionActuelle] = couleurRougeFramboise;
-        pixels = bandeBlanchePixelRouge;
+        discoled.afficher(bandeBlanchePixelRouge);
       }
       else if(positionDansAnimation < 2*24)
       {       
         bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLANC;
-        pixels = bandeBlanchePixelRouge;
+        discoled.afficher(bandeBlanchePixelRouge);
       }
       else
       {       
         bandeBlanchePixelRouge[positionActuelle] = COULEUR_BLEU;
-        pixels = bandeBlanchePixelRouge;
+        discoled.afficher(bandeBlanchePixelRouge);
       }
-      discoled.afficher(pixels);
     }
 }
 
