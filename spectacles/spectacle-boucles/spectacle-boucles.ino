@@ -42,7 +42,7 @@ void animerClignotementRouge()
       delay(300);
       Serial.println("Mode CLIGNOTE_ROUGE");
       if(positionDansAnimation%2 == 0) discoled.afficher(bandeRougeFramboise);
-      else pixels = discoled.afficher(bandeBlanche);
+      else discoled.afficher(bandeBlanche);
     }
 }
 

@@ -1,5 +1,5 @@
 #include <DiscoLed.h>
-#define PIN 9
+#define PIN 2
 #define LED_NOMBRE 40
 
 #define MODE_ROTATION_ALTERNEE 0
