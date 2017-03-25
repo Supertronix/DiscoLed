@@ -1,4 +1,6 @@
 #include <WS2812.h>
+#ifndef DISCOLED_H
+#define DISCOLED_H
 
 struct Led
 { 
@@ -36,7 +38,7 @@ class Animation
 {
 	public:
 		int duree;
-		void (*animer)();
+		bool (*animer)();
 };
 
 class Spectacle
@@ -54,7 +56,8 @@ class Spectacle
     Spectacle(DiscoLed *);
     void ajouterAnimation(Animation *);
 	void jouerAnimation();
+	bool jouerAnimationSansSauter();
 	void sauterAnimation();
 };
 
-
+#endif

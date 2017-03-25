@@ -49,52 +49,76 @@ void initialiserBande()
   
 }
 
+unsigned long tempsBande = 0;
 void bouclerBande()
 {
   Serial.println("Spectacle Bande - Nouvelle animation");  
-  spectacleBande.jouerAnimation();
+  tempsBande = millis();
+  if(!spectacleBande.jouerAnimationSansSauter()) spectacleBande.sauterAnimation();
 }
 
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
-
-void animerBandeRotationAlternee()
+int positionDansAnimation;
+int tempsBandeRotationAlternee = 0;
+bool animerBandeRotationAlternee()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
+    if(tempsBandeRotationAlternee == 0) 
     {
-      delay(300);
+      tempsBandeRotationAlternee = tempsBande;  
+      positionDansAnimation = 0;
+    }
+    //for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
+    if(tempsBandeRotationAlternee % 300 == 0)
+    {
+      positionDansAnimation++;
+      //delay(300);
       Serial.println("Mode ROTATION_ALTERNEE");
       Serial.println(positionDansAnimation);
       if(positionDansAnimation%2 == 0) pixelsBande = bandeBlancBleu;
       else pixelsBande = bandeBleuBlanc;
       bande.afficher(pixelsBande);
     } 
+    if(tempsBandeRotationAlternee/50 > 14) return false;
+    return true;
 }
 
-void animerBandeClignotementRouge()
+int tempsBandeClignotementRouge = 0;
+bool animerBandeClignotementRouge()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < 6; positionDansAnimation++)
+    if(tempsBandeClignotementRouge == 0) 
     {
-      delay(300);
+      tempsBandeClignotementRouge = tempsBande;  
+      positionDansAnimation = 0;
+    }
+    //for(int positionDansAnimation = 0; positionDansAnimation < 6; positionDansAnimation++)
+    if(tempsBandeClignotementRouge%300 == 0)
+    {
+      positionDansAnimation++;
+      //delay(300);
       Serial.println("Mode CLIGNOTE_ROUGE");
       if(positionDansAnimation%2 == 0) pixelsBande = bandeRougeFramboise;
       else pixelsBande = bandeBlanche;
       bande.afficher(pixelsBande);
     }
+    if(tempsBandeClignotementRouge/50 > 6) return false;
+    return true;
 }
 
-void animerBandePromenadeRouge()
+int tempsBandePromenadeRouge = 0;
+bool animerBandePromenadeRouge()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < BANDE_LED; positionDansAnimation++)
+    if(tempsBandePromenadeRouge == 0) tempsBandePromenadeRouge = tempsBande;
+    //for(int positionDansAnimation = 0; positionDansAnimation < BANDE_LED; positionDansAnimation++)
+    if(tempsBandePromenadeRouge%50 == 0)
     {
-      delay(50);    
+      //delay(50);    
       positionPrecedenteBande = positionDansAnimation - 1;
       if(positionPrecedenteBande < 0) positionPrecedenteBande = 24 - 1;
       Serial.print("Position actuelle = ");
@@ -106,13 +130,18 @@ void animerBandePromenadeRouge()
       pixelsBande = bandeBlanchePixelRouge;
       bande.afficher(pixelsBande);
     }
+    if(tempsBandePromenadeRouge/50 > BANDE_LED) return false;
+    return true;
 }
 
-void animerBandeTroisTours()
+int tempsBandeTroisTours = 0;
+bool animerBandeTroisTours()
 {   
-    for(int positionDansAnimation = 0; positionDansAnimation < 3*BANDE_LED; positionDansAnimation++)
+    if(tempsBandeTroisTours == 0) tempsBandeTroisTours = tempsBande;
+    //for(int positionDansAnimation = 0; positionDansAnimation < 3*BANDE_LED; positionDansAnimation++)
+    if(tempsBandeTroisTours%50 == 0)
     {
-      delay(50);
+      //delay(50);
       positionActuelleBande = positionDansAnimation%24;
         
       Serial.print("Position actuelle = ");
@@ -136,6 +165,8 @@ void animerBandeTroisTours()
       }
       bande.afficher(pixelsBande);
     }
+    if(tempsBandeTroisTours/50 > 3*BANDE_LED) return false;
+    return true;
 }
 
 /*

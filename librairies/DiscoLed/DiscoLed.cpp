@@ -77,6 +77,11 @@ void Spectacle::jouerAnimation()
 	this->listeAnimations[animationCourante]->animer();		
 	this->sauterAnimation();
 }
+bool Spectacle::jouerAnimationSansSauter()
+{
+	if(nombreAnimations < 1) return;
+	return this->listeAnimations[animationCourante]->animer();		
+}
 
 void Spectacle::sauterAnimation()
 {
