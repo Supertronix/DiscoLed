@@ -63,8 +63,8 @@ class DiscoLed
 	public:
 		DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge = 0);
 		void afficher(Led* pixels);
-		//Led * preparerBandeVide();
-		//Led * creerBandeCouleurUnie(Led couleur);
+		Led * preparerBandeVide();
+		Led * creerBandeCouleurUnie(Led couleur);
 };
 
 /*

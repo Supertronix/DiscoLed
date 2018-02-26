@@ -33,7 +33,7 @@ Led FabriqueLed::creerCouleur(int rouge, int vert, int bleu)
     return couleur;
 	//return (Led)NULL;
 }
-/*
+
 Led * DiscoLed::preparerBandeVide()
 {
   return (Led*)malloc(this->nombre*3*sizeof(uint8_t));
@@ -48,7 +48,7 @@ Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
   }
   return bandeCouleur;
 }
-*/
+
 
 /*
 #define TAILLE_SPECTACLE 8
