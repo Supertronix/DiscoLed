@@ -25,15 +25,13 @@ Led * bandeBleuBlanc;
 Led * bandeBlancBleu;
 bool animerAlternance()
 {
-    for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
-    {
-      delay(300);
-      Serial.println("Mode ROTATION_ALTERNEE");
-      Serial.println(positionDansAnimation);
-      if(positionDansAnimation%2 == 0) pixels = bandeBlancBleu;
-      else pixels = bandeBleuBlanc;
-      discoled.afficher(pixels);
-    } 
+  moment = millis() >> 4;
+  if(moment%40 > 20)
+    pixels = bandeBlancBleu;
+  else 
+    pixels = bandeBleuBlanc;
+  discoled.afficher(pixels);
+  //if(positionDansAnimation%2 == 0) 
 }
 
 void setup() 
