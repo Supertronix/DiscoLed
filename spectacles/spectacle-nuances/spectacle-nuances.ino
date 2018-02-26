@@ -20,15 +20,38 @@ bool animerArcEnCiel()
   discoled.afficher(pixels);
 }
 
+Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
+Led * bandeBleuBlanc;
+Led * bandeBlancBleu;
+bool animerAlternance()
+{
+    for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
+    {
+      delay(300);
+      Serial.println("Mode ROTATION_ALTERNEE");
+      Serial.println(positionDansAnimation);
+      if(positionDansAnimation%2 == 0) pixels = bandeBlancBleu;
+      else pixels = bandeBleuBlanc;
+      discoled.afficher(pixels);
+    } 
+}
+
 void setup() 
 {
   Serial.begin(9600);
   pixels = new Led[NOMBRE];
 
+  bandeBleuBlanc = discoled.creerBandeCouleurAlternee(couleurBleuQuebec, COULEUR_BLANC); 
+  bandeBlancBleu = discoled.creerBandeCouleurAlternee(COULEUR_BLANC, couleurBleuQuebec); 
+
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->animer = animerArcEnCiel;
-  animationArcEnCiel->duree = 30000;
+  animationArcEnCiel->duree = 300;
   spectacle.ajouterAnimation(animationArcEnCiel);
+  Animation * animationAlternance = new Animation();
+  animationAlternance->animer = animerAlternance;
+  animationAlternance->duree = 400;
+  spectacle.ajouterAnimation(animationAlternance);
 }
 
 
