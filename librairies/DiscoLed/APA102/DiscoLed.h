@@ -37,7 +37,6 @@ class DiscoLed
 		Led * creerBandeCouleurUnie(Led couleur);
 };
 
-/*
 class Animation
 {
 	public:
@@ -63,5 +62,4 @@ class Spectacle
 	bool jouerAnimationSansSauter();
 	void sauterAnimation();
 };
-*/
 #endif

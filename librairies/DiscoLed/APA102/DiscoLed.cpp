@@ -83,7 +83,6 @@ Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
 }
 
 
-/*
 #define TAILLE_SPECTACLE 8
 
 Spectacle::Spectacle()
@@ -123,4 +122,4 @@ void Spectacle::sauterAnimation()
 {
 	animationCourante++;
 	if(animationCourante > nombreAnimations) animationCourante = 0;
-}*/
+}
