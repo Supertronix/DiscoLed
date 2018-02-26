@@ -1,14 +1,37 @@
 #include "DiscoLed.h"
 
-DiscoLed::DiscoLed(int nombre, int pin)
+DiscoLed::DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge)
 {	
-	masque = digitalPinToBitMask(pin);
-	port = portOutputRegister(digitalPinToPort(pin));
-	portMode = portModeRegister(digitalPinToPort(pin));
-	anneau = new WS2812(pin);
-	anneau->setOutput(pin);
+	bande = new APA102<3, 4>();
+	//masque = digitalPinToBitMask(pin);
+	//port = portOutputRegister(digitalPinToPort(pin));
+	//portMode = portModeRegister(digitalPinToPort(pin));
+	//anneau = new WS2812(pin);
+	//anneau->setOutput(pin);
 	this->pin = pin;
+	this->horloge = horloge;
 	this->nombre = nombre;
+}
+
+const uint8_t brillance = 1;
+void DiscoLed::afficher(Led* pixels)
+{
+  bande->write((rgb_color*)pixels, nombre, brillance);
+}
+
+/*
+ * Initialise la couleur du led : 
+ * Parametre : niveau de rouge, niveau de vert, niveau de bleu
+ */
+/*
+Led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
+{
+    Led couleur;
+    couleur.rouge = rouge;
+    couleur.vert = vert;
+    couleur.bleu = bleu;
+    return couleur;
+	return (Led)NULL;
 }
 
 Led * DiscoLed::preparerBandeVide()
@@ -25,29 +48,9 @@ Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
   }
   return bandeCouleur;
 }
-
-void DiscoLed::afficher(Led* pixels)
-{
-	//anneau->set_crgb_at(2, couleur);
-	*portMode |= masque;
-	anneau->ws2812_sendarray_mask((uint8_t*)pixels,3*this->nombre, masque,(uint8_t*) port,(uint8_t*) portMode); 
-	//anneau->sync();
-
-}
+*/
 
 /*
- * Initialise la couleur du led : 
- * Parametre : niveau de rouge, niveau de vert, niveau de bleu
- */
-Led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
-{
-    Led couleur;
-    couleur.rouge = rouge;
-    couleur.vert = vert;
-    couleur.bleu = bleu;
-    return couleur;
-}
-
 #define TAILLE_SPECTACLE 8
 
 Spectacle::Spectacle()
@@ -87,4 +90,4 @@ void Spectacle::sauterAnimation()
 {
 	animationCourante++;
 	if(animationCourante > nombreAnimations) animationCourante = 0;
-}
+}*/
