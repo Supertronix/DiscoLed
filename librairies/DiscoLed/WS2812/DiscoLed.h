@@ -14,6 +14,13 @@ const Led COULEUR_ROUGE = {0, 255, 0};
 const Led COULEUR_BLEU = {0, 0, 255};
 const Led COULEUR_VERT = {255, 0, 0};
 
+class FabriqueLed
+{
+	public:
+	static Led convertirHSV(uint16_t h, uint8_t s, uint8_t v);
+	Led creerCouleur(int rouge, int vert, int bleu);
+};
+
 class DiscoLed
 {
 	
