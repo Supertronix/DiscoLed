@@ -48,6 +48,7 @@ class FabriqueLed
 		led.bleu = bleu;
 		return led;
 	}
+	Led creerCouleur(int rouge, int vert, int bleu);
 };
 
 class DiscoLed
@@ -61,9 +62,7 @@ class DiscoLed
 
 	public:
 		DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge = 0);
-		void afficher(Led * pixels);
-		//void afficher(Led* pixels);
-		//Led creerCouleur(int rouge, int vert, int bleu);
+		void afficher(Led* pixels);
 		//Led * preparerBandeVide();
 		//Led * creerBandeCouleurUnie(Led couleur);
 };

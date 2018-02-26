@@ -23,17 +23,17 @@ void DiscoLed::afficher(Led* pixels)
  * Initialise la couleur du led : 
  * Parametre : niveau de rouge, niveau de vert, niveau de bleu
  */
-/*
-Led DiscoLed::creerCouleur(int rouge, int vert, int bleu)
+
+Led FabriqueLed::creerCouleur(int rouge, int vert, int bleu)
 {
     Led couleur;
     couleur.rouge = rouge;
     couleur.vert = vert;
     couleur.bleu = bleu;
     return couleur;
-	return (Led)NULL;
+	//return (Led)NULL;
 }
-
+/*
 Led * DiscoLed::preparerBandeVide()
 {
   return (Led*)malloc(this->nombre*3*sizeof(uint8_t));
