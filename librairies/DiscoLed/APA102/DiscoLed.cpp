@@ -82,6 +82,23 @@ Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
   return bandeCouleur;
 }
 
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * DiscoLed::creerBandeCouleurAlternee(Led couleur1, Led couleur2)
+{
+  Led * bandeCouleur = this->preparerBandeVide();
+  for(int position = 0; position < this->nombre; position+=2)// possible car le nombre est pair
+  {
+    bandeCouleur[position] = couleur1;
+    bandeCouleur[position+1] = couleur2;
+    
+  }
+  return bandeCouleur;
+}
+
+
 
 #define TAILLE_SPECTACLE 8
 
@@ -107,14 +124,14 @@ void Spectacle::ajouterAnimation(Animation * animation)
 }
 void Spectacle::jouerAnimation()
 {
-	if(nombreAnimations < 1) return;
+	if(nombreAnimations < 1) return false;
 	
 	this->listeAnimations[animationCourante]->animer();		
 	this->sauterAnimation();
 }
 bool Spectacle::jouerAnimationSansSauter()
 {
-	if(nombreAnimations < 1) return;
+	if(nombreAnimations < 1) return false;
 	return this->listeAnimations[animationCourante]->animer();		
 }
 

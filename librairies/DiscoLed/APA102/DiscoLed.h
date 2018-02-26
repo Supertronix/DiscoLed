@@ -35,6 +35,7 @@ class DiscoLed
 		void afficher(Led* pixels);
 		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
+		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
 };
 
 class Animation
