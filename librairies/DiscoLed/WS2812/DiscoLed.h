@@ -18,7 +18,7 @@ class FabriqueLed
 {
 	public:
 	static Led convertirHSV(uint16_t h, uint8_t s, uint8_t v);
-	Led creerCouleur(int rouge, int vert, int bleu);
+	static Led creerCouleur(int rouge, int vert, int bleu);
 };
 
 class DiscoLed
