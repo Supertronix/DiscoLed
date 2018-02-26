@@ -42,6 +42,7 @@ class Animation
 {
 	public:
 		int duree;
+		int curseur = 0;
 		bool (*animer)();
 };
 

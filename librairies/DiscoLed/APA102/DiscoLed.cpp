@@ -125,9 +125,10 @@ void Spectacle::ajouterAnimation(Animation * animation)
 void Spectacle::jouerAnimation()
 {
 	if(nombreAnimations < 1) return false;
-	
-	this->listeAnimations[animationCourante]->animer();		
-	this->sauterAnimation();
+	Serial.println(this->listeAnimations[animationCourante]->curseur);
+	this->listeAnimations[animationCourante]->animer();	
+	this->listeAnimations[animationCourante]->curseur++;
+	if(this->listeAnimations[animationCourante]->curseur >= this->listeAnimations[animationCourante]->duree) this->sauterAnimation();
 }
 bool Spectacle::jouerAnimationSansSauter()
 {
@@ -137,6 +138,7 @@ bool Spectacle::jouerAnimationSansSauter()
 
 void Spectacle::sauterAnimation()
 {
+	Serial.println("sauterAnimation()");
 	animationCourante++;
 	if(animationCourante > nombreAnimations) animationCourante = 0;
 }
