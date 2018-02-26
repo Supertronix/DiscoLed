@@ -1,4 +1,4 @@
-#include <WS2812.h>
+#include <APA102.h>
 #ifndef DISCOLED_H
 #define DISCOLED_H
 
