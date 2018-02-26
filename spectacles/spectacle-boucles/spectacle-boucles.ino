@@ -1,6 +1,7 @@
 #include <DiscoLed.h>
 #define PIN 3
-#define LED_NOMBRE 60
+#define HORLOGE 4
+#define NOMBRE 67
 
 Led * pixels;
 
@@ -10,19 +11,19 @@ Led * bandeBleuBlanc;
 Led * bandeBlancBleu;
 Led * bandeBlanchePixelRouge;
 
-Led couleurBleuPale = {.vert = 190, .rouge = 36, .bleu = 240};
-Led couleurBleuQuebec = {.vert = 92, .rouge = 0, .bleu = 22};
-Led couleurJaune = {.vert = 252, .rouge = 250, .bleu = 104};
-Led couleurRougeFramboise = {.vert = 39, .rouge = 242, .bleu = 144};
+Led couleurBleuPale = { .rouge = 36,.vert = 190, .bleu = 240};
+Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
+Led couleurJaune = {.rouge = 250, .vert = 252, .bleu = 104};
+Led couleurRougeFramboise = {.rouge = 242, .vert = 39, .bleu = 144};
 
 int positionActuelle = 0;
 int positionPrecedente = 0;
 
-DiscoLed discoled(LED_NOMBRE, PIN);
+DiscoLed discoled(NOMBRE, PIN, HORLOGE);
 Spectacle spectacle(&discoled); // peut-etre plutot memoire dynamique
 
 
-void animerRotationAlternee()
+bool animerRotationAlternee()
 {
     for(int positionDansAnimation = 0; positionDansAnimation < 14; positionDansAnimation++)
     {
@@ -35,7 +36,7 @@ void animerRotationAlternee()
     } 
 }
 
-void animerClignotementRouge()
+bool animerClignotementRouge()
 {
     for(int positionDansAnimation = 0; positionDansAnimation < 6; positionDansAnimation++)
     {
@@ -46,7 +47,7 @@ void animerClignotementRouge()
     }
 }
 
-void animerPromenadeRouge()
+bool animerPromenadeRouge()
 {
     for(int positionDansAnimation = 0; positionDansAnimation < 24; positionDansAnimation++)
     {
@@ -63,7 +64,7 @@ void animerPromenadeRouge()
     }
 }
 
-void animerTroisTours()
+bool animerTroisTours()
 {   
     for(int positionDansAnimation = 0; positionDansAnimation < 3*24; positionDansAnimation++)
     {
@@ -132,7 +133,7 @@ void setup()
 Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 {
   Led * bandeCouleur = discoled.preparerBandeVide();
-  for(int position = 0; position < LED_NOMBRE; position+=2)// possible car le nombre est pair
+  for(int position = 0; position < NOMBRE; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
     bandeCouleur[position+1] = couleur2;
