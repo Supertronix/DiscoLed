@@ -35,10 +35,10 @@ class DiscoLed
 
 	public:
 		DiscoLed(int nombre, int pin);
+		void afficher(Led* pixels);
 		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
-		void afficher(Led* pixels);
-		Led creerCouleur(int rouge, int vert, int bleu);
+		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
 };
 
 class Animation
