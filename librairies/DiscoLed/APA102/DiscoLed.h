@@ -36,6 +36,7 @@ class DiscoLed
 		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
 		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
+        Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);        
 };
 
 class Animation

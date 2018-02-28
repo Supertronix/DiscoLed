@@ -99,6 +99,25 @@ Led * DiscoLed::creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 }
 
 
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
+{
+  Led * bandeCouleur = this->preparerBandeVide();
+  for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
+  {
+    for(int position = 0; position < epaisseur; position+=2)
+    {
+        if((rayure+position)<this->nombre) bandeCouleur[rayure+position] = couleur1;
+        if((rayure+position+epaisseur)<this->nombre) bandeCouleur[rayure+position+epaisseur] = couleur2;
+    }
+  }
+  return bandeCouleur;
+}
+
+
 
 #define TAILLE_SPECTACLE 8
 
