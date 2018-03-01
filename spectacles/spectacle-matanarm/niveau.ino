@@ -2,7 +2,6 @@ void preparerNiveau(DiscoLed* discoled)
 {
   discoled->blanchir();
 }
-Led couleurAlliance = COULEUR_ROUGE;
 int niveau = 5;
 bool animerNiveau(DiscoLed* discoled)
 {  
