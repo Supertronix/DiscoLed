@@ -100,7 +100,7 @@ void setup()
 #define MODE_NIVEAU 2
 #define MODE_FLASH 3
 
-int mode = MODE_AUTONOME;
+int mode = MODE_FLASH;
 int chariot = 0;
 
 void loop() 
@@ -128,9 +128,11 @@ void recevoirCommandeRio(int nombre)
   if(Wire.available())
   {
     char lettre = Wire.read();
-    Serial.println(lettre);
+    Serial.print("Lettre recue "); Serial.println(lettre);
     switch(lettre)
     {
+      case 'r': case 'R': couleurAlliance = COULEUR_ROUGE; break;
+      case 'b': case 'B': couleurAlliance = COULEUR_BLEU; break;
       case 'a': mode = MODE_AUTONOME; break;
       case 't': mode = MODE_TELEOP; break;
       case 'n': mode = MODE_NIVEAU; break;
