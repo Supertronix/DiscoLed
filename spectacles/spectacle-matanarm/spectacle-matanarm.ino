@@ -1,14 +1,12 @@
 #include <DiscoLed.h>
 
-#define PIN_DROITE 3
-#define HORLOGE_DROITE 4
+#define PIN 3
+#define HORLOGE 4
 #define NOMBRE 67
 
-DiscoLed discoledDroit(NOMBRE, PIN_DROITE, HORLOGE_DROITE);
-Spectacle spectacleDroit(&discoledDroit); // peut-etre plutot memoire dynamique
-
+DiscoLed discoled(NOMBRE, PIN, HORLOGE);
+Spectacle spectacle(&discoled); // peut-etre plutot memoire dynamique
 uint8_t moment;
-DiscoLed& discoled = discoledDroit;
 
 void setup() 
 {
@@ -21,14 +19,22 @@ void setup()
   animationVagues->animer = animerVagues;
   animationVagues->liberer = libererVagues;
   animationVagues->duree = 400;
-  spectacleDroit.ajouterAnimation(animationVagues);
+  spectacle.ajouterAnimation(animationVagues);
   
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->preparer = preparerArcEnCiel;
   animationArcEnCiel->animer = animerArcEnCiel;
   animationArcEnCiel->liberer = libererArcEnCiel;
   animationArcEnCiel->duree = 400;
-  spectacleDroit.ajouterAnimation(animationArcEnCiel);
+  spectacle.ajouterAnimation(animationArcEnCiel);
+
+  Animation * animationAlternance = new Animation();  
+  animationAlternance->preparer = preparerAlternance;  
+  animationAlternance->animer = animerAlternance;  
+  animationAlternance->liberer = libererAlternance;  
+  animationAlternance->duree = 400;  
+  spectacle.ajouterAnimation(animationAlternance);  
+
 /*
   initialiserCollision(&discoledDroit);
   Animation * animationCollision = new Animation();
@@ -42,7 +48,7 @@ void setup()
 void loop() 
 {
   //Serial.println("bouclerBandeDroite()");
-  spectacleDroit.jouerAnimation();
+  spectacle.jouerAnimation();
   delay(1);
 }
 

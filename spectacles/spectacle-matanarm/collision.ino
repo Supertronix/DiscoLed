@@ -9,11 +9,6 @@ void preparerCollision(DiscoLed* discoled)
     discoled->pixels[i] = FabriqueLed::creerCouleur(0, 0, 0);
   }
 }
-void palir(unsigned char *valeur, unsigned char degre = 2)
-{
-  unsigned char palissement = *valeur >> degre;  // cree un ratio de la valeur
-  *valeur -= palissement;  
-}
 
 bool animerCollision(DiscoLed* discoled)
 {
@@ -44,6 +39,16 @@ bool animerCollision(DiscoLed* discoled)
   discoled->afficher(discoled->pixels);
   iterationCollision++;  
   if(finTete >= (NOMBRE+1)/2 - 2) iterationCollision = 0;
+}
+
+void libererCollision(DiscoLed* discoled)
+{
+}
+
+void palir(unsigned char *valeur, unsigned char degre = 2)
+{
+  unsigned char palissement = *valeur >> degre;  // cree un ratio de la valeur
+  *valeur -= palissement;  
 }
 
 void palirIntervalle(Led * pixels, int debut, int fin)
