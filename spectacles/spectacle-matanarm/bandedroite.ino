@@ -3,8 +3,8 @@ void initialiserBandeDroite()
 {
   //Serial.begin(9600);
   //Serial.println("initialiserBandeDroite()");
-  //pixels = new Led[NOMBRE];
-  
+
+  initialiserArcEnCiel();
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->animer = animerArcEnCiel;
   animationArcEnCiel->duree = 400;
