@@ -1,4 +1,4 @@
-void initialiserArcEnCiel()
+void initialiserArcEnCiel(DiscoLed * discoled)
 {
   
 }

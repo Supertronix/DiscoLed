@@ -3,7 +3,7 @@ void initialiserBandeGauche()
   Serial.begin(9600);
   Serial.println("initialiserBandeGauche()");
 
-  initialiserArcEnCiel();
+  initialiserArcEnCiel(&discoledDroit);
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->animer = animerArcEnCiel;
   animationArcEnCiel->duree = 400;
@@ -14,6 +14,5 @@ void bouclerBandeGauche()
 {
   Serial.println("bouclerBandeGauche()");  
   spectacleGauche.jouerAnimation();
-  delay(10);
-    
+  delay(1);   
 }
