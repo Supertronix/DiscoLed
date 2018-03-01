@@ -1,9 +1,8 @@
 #define BRILLANCE_MAX 180
-const uint8_t BRILLANCE = 1;
 unsigned int iterationCollision = 0;
 bool encours = true;
 
-void initialiserCollision(DiscoLed* discoled)
+void preparerCollision(DiscoLed* discoled)
 {
   for (int i = 0; i < NOMBRE; i++)
   {

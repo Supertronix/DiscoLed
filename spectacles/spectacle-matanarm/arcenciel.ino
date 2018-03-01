@@ -1,4 +1,4 @@
-void initialiserArcEnCiel(DiscoLed * discoled)
+void preparerArcEnCiel(DiscoLed * discoled)
 {
   
 }
@@ -15,3 +15,7 @@ bool animerArcEnCiel(DiscoLed * discoled)
   discoled->afficher(discoled->pixels);
 }
 
+void libererArcEnCiel(DiscoLed * discoled)
+{
+  
+}
