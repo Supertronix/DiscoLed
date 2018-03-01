@@ -12,7 +12,7 @@ uint8_t moment;
 void setup() 
 {
   Serial.begin(9600);
-  pixels = new Led[NOMBRE];
+  //pixels = new Led[NOMBRE];
 
   Animation * animationChromatisme = new Animation();
   animationChromatisme->animer = animerChromatisme;
