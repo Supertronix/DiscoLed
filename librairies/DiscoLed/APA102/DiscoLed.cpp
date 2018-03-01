@@ -67,6 +67,30 @@ Led FabriqueLed::creerCouleur(int rouge, int vert, int bleu)
 	//return (Led)NULL;
 }
 
+Led FabriqueLed::trouverCouleurMilieu(Led couleur1, Led couleur2)
+{
+  Serial.print("Rouge de couleur1 = ");
+  Serial.println(couleur1.rouge);
+  Serial.print("Vert de couleur1 = ");
+  Serial.println(couleur1.vert);
+  Serial.print("Bleu de couleur1 = ");
+  Serial.println(couleur1.bleu);
+  Serial.print("Rouge de couleur2 = ");
+  Serial.println(couleur2.rouge);
+  Serial.print("Vert de couleur2 = ");
+  Serial.println(couleur2.vert);
+  Serial.print("Bleu de couleur2 = ");
+  Serial.println(couleur2.bleu);
+    
+    
+    Led nouvellecouleur;
+    nouvellecouleur.rouge = (couleur1.rouge + couleur2.rouge)/2;
+    nouvellecouleur.vert = (couleur1.vert + couleur2.vert)/2;
+    nouvellecouleur.bleu = (couleur1.bleu + couleur2.bleu)/2;
+    return nouvellecouleur;
+}
+
+
 Led * DiscoLed::preparerBandeVide()
 {
   return (Led*)malloc(this->nombre*3*sizeof(uint8_t));
@@ -115,6 +139,81 @@ Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
     }
   }
   return bandeCouleur;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
+{
+  Led * bandeCouleur = this->preparerBandeVide();
+  for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
+  {
+    for(int position = 0; position < epaisseur; position++)
+    {
+        if((rayure+position)<this->nombre) bandeCouleur[rayure+position] = couleur1;
+        if((rayure+position+epaisseur)<this->nombre) bandeCouleur[rayure+position+epaisseur] = couleur2;
+    }
+  }
+  return bandeCouleur;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * DiscoLed::creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur)
+{
+  Led couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur2);
+  couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur12);
+  couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur12);
+  couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur12);
+  Serial.print("Rouge de couleur12 = ");
+  Serial.println(couleur12.rouge);
+  Serial.print("Vert de couleur12 = ");
+  Serial.println(couleur12.vert);
+  Serial.print("Bleu de couleur12 = ");
+  Serial.println(couleur12.bleu);
+  
+  Led * bandeCouleur = this->preparerBandeVide();
+  for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
+  {
+    for(int position = 0; position < epaisseur; position++)
+    {
+        if((rayure+position)>=this->nombre) break;
+        if((rayure+position+epaisseur)>=this->nombre) break;  // TODO
+        
+        if(position == 0)
+        {
+            bandeCouleur[rayure+position] = couleur12;
+            bandeCouleur[rayure+position+epaisseur] = couleur12;            
+        }
+        else if(position == epaisseur - 1)
+        {
+            bandeCouleur[rayure+position] = couleur12;
+            bandeCouleur[rayure+position+epaisseur] = couleur12;           
+        }
+        else
+        {
+            bandeCouleur[rayure+position] = couleur1;
+            bandeCouleur[rayure+position+epaisseur] = couleur2;
+        }
+    }
+  }
+  return bandeCouleur;
+}
+
+
+Led * DiscoLed::decalerBande(Led * bande, int NOMBRE)
+{
+  Led temporaire = bande[0];
+  for(int position; position < NOMBRE-1; position++)
+  {
+    bande[position] = bande[position+1];
+  }
+  bande[NOMBRE-1] = temporaire;
+  return bande;
 }
 
 

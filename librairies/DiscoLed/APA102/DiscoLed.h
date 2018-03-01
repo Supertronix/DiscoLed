@@ -9,16 +9,17 @@ struct Led
 	uint8_t bleu;  
 };
 
-const Led COULEUR_BLANC = {255, 255, 255};
-const Led COULEUR_ROUGE = {255, 0, 0};
-const Led COULEUR_VERT = {0, 255, 0};
-const Led COULEUR_BLEU = {0, 0, 255};
+const Led COULEUR_BLANC = {100, 100, 100};
+const Led COULEUR_ROUGE = {100, 0, 0};
+const Led COULEUR_VERT = {0, 100, 0};
+const Led COULEUR_BLEU = {0, 0, 100};
 
 class FabriqueLed
 {
 	public:
 	static Led convertirHSV(uint16_t h, uint8_t s, uint8_t v);
 	static Led creerCouleur(int rouge, int vert, int bleu);
+    static Led trouverCouleurMilieu(Led couleur1, Led couleur2);
 };
 
 class DiscoLed
@@ -36,7 +37,9 @@ class DiscoLed
 		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
 		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
-        Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);        
+        Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);
+        Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);        
+        static Led * decalerBande(Led * bande, int nombre);
 };
 
 class Animation
