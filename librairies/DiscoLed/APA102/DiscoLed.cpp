@@ -267,14 +267,14 @@ void Spectacle::jouerAnimation()
 {
 	if(nombreAnimations < 1) return false;
 	Serial.println(this->listeAnimations[animationCourante]->curseur);
-	this->listeAnimations[animationCourante]->animer();	
+	this->listeAnimations[animationCourante]->animer(this->discoled);	
 	this->listeAnimations[animationCourante]->curseur++;
 	if(this->listeAnimations[animationCourante]->curseur >= this->listeAnimations[animationCourante]->duree) this->sauterAnimation();
 }
 bool Spectacle::jouerAnimationSansSauter()
 {
 	if(nombreAnimations < 1) return false;
-	return this->listeAnimations[animationCourante]->animer();		
+	return this->listeAnimations[animationCourante]->animer(this->discoled);		
 }
 
 void Spectacle::sauterAnimation()
