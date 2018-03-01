@@ -129,6 +129,13 @@ void recevoirCommandeRio(int nombre)
   {
     char lettre = Wire.read();
     Serial.println(lettre);
+    switch(lettre)
+    {
+      case 'a': mode = MODE_AUTONOME; break;
+      case 't': mode = MODE_TELEOP; break;
+      case 'n': mode = MODE_NIVEAU; break;
+      case 'f': mode = MODE_FLASH; break;
+    }
   }
 }
 
