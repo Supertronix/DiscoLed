@@ -14,7 +14,12 @@ void setup()
   Serial.begin(9600);
   pixels = new Led[NOMBRE];
 
-
+  initialiserCollision();
+  Animation * animationCollision = new Animation();
+  animationCollision->animer = animerCollision;
+  animationCollision->duree = 400;
+  spectacle.ajouterAnimation(animationCollision);
+/*
   initialiserVagues();
   Animation * animationVagues = new Animation();
   animationVagues->animer = animerVagues;
@@ -26,13 +31,11 @@ void setup()
   animationArcEnCiel->duree = 100;
   spectacle.ajouterAnimation(animationArcEnCiel);
 
-/*
   initialiserRayures();
   Animation * animationRayures = new Animation();
   animationRayures->animer = animerRayures;
   animationRayures->duree = 200;
   spectacle.ajouterAnimation(animationRayures);
-*/
 
 /* 
   
