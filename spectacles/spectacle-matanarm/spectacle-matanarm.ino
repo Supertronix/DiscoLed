@@ -100,23 +100,18 @@ void setup()
 #define MODE_NIVEAU 2
 #define MODE_FLASH 3
 
-int mode = MODE_FLASH;
+int mode = MODE_AUTONOME;
 int chariot = 0;
 
 void loop() 
 {
   //Serial.println("loop()");
-  moment++; 
-  //if(moment%2 == 0) 
-  chariot++;  // simulation de reception
-  //Serial.print("chariot "); Serial.println(chariot);
-  
   switch(mode)
   {
-    case MODE_TELEOP : spectacleTeleop.jouerAnimation(); break; // rien pour l'instant
-    case MODE_AUTONOME : spectacleAutonome.jouerAnimation(); break; // arc-en-ciel + autres patterns
-    case MODE_NIVEAU : spectacleNiveau.jouerAnimation(); break; // niveau monte selon couleur de l'alliance
-    case MODE_FLASH : spectacleFlash.jouerAnimation(); break; // clignote dans la couleur de l'alliance
+    case MODE_AUTONOME: spectacleAutonome.jouerAnimation();break;
+    case MODE_TELEOP: spectacleTeleop.jouerAnimation();break;
+    case MODE_NIVEAU: spectacleNiveau.jouerAnimation();break;
+    case MODE_FLASH: spectacleFlash.jouerAnimation();break;
     default: spectacleTeleop.jouerAnimation(); break;
   }
   delay(1);
@@ -133,10 +128,10 @@ void recevoirCommandeRio(int nombre)
     {
       case 'r': case 'R': couleurAlliance = COULEUR_ROUGE; break;
       case 'b': case 'B': couleurAlliance = COULEUR_BLEU; break;
-      case 'a': mode = MODE_AUTONOME; break;
-      case 't': mode = MODE_TELEOP; break;
-      case 'n': mode = MODE_NIVEAU; break;
-      case 'f': mode = MODE_FLASH; break;
+      case 'a': case 'A': mode = MODE_AUTONOME; break;
+      case 't': case 'T': mode = MODE_TELEOP; break;
+      case 'n': case 'N': mode = MODE_NIVEAU; break;
+      case 'f': case 'F': mode = MODE_FLASH; break;
     }
   }
 }
