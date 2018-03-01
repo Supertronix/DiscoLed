@@ -90,6 +90,21 @@ Led FabriqueLed::trouverCouleurMilieu(Led couleur1, Led couleur2)
     return nouvellecouleur;
 }
 
+Led& FabriqueLed::palirSelonDegre(Led& led, unsigned char degre)
+{
+	FabriqueLed::palirCouleurSelonDegre(&led.rouge, degre);
+	FabriqueLed::palirCouleurSelonDegre(&led.vert, degre);
+	FabriqueLed::palirCouleurSelonDegre(&led.bleu, degre);
+	return led;
+}
+
+void FabriqueLed::palirCouleurSelonDegre(unsigned char *valeur, unsigned char degre)
+{
+  unsigned char palissement = *valeur >> degre;  // cree un ratio de la valeur
+  *valeur -= palissement;  
+}
+
+
 
 Led * DiscoLed::preparerBandeVide()
 {
@@ -133,24 +148,6 @@ Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
   for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
   {
     for(int position = 0; position < epaisseur; position+=2)
-    {
-        if((rayure+position)<this->nombre) bandeCouleur[rayure+position] = couleur1;
-        if((rayure+position+epaisseur)<this->nombre) bandeCouleur[rayure+position+epaisseur] = couleur2;
-    }
-  }
-  return bandeCouleur;
-}
-
-/*
- * Initialise la couleur des bandes
- * Paramètres : couleurs des led
- */
-Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
-{
-  Led * bandeCouleur = this->preparerBandeVide();
-  for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
-  {
-    for(int position = 0; position < epaisseur; position++)
     {
         if((rayure+position)<this->nombre) bandeCouleur[rayure+position] = couleur1;
         if((rayure+position+epaisseur)<this->nombre) bandeCouleur[rayure+position+epaisseur] = couleur2;
@@ -214,6 +211,18 @@ Led * DiscoLed::decalerBande(Led * bande, int NOMBRE)
   }
   bande[NOMBRE-1] = temporaire;
   return bande;
+}
+
+void DiscoLed::decalerBande()
+{
+	/*
+  Led temporaire = (Led)bande[0];
+  for(int position; position < this->nombre-1; position++)
+  {
+    bande[position] = bande[position+1];
+  }
+  bande[this->nombre-1] = temporaire;
+  */
 }
 
 

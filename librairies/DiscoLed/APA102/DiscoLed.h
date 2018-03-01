@@ -20,6 +20,10 @@ class FabriqueLed
 	static Led convertirHSV(uint16_t h, uint8_t s, uint8_t v);
 	static Led creerCouleur(int rouge, int vert, int bleu);
     static Led trouverCouleurMilieu(Led couleur1, Led couleur2);
+	static Led& palirSelonDegre(Led& led, unsigned char degre = 2);
+	
+	private:
+	static void palirCouleurSelonDegre(unsigned char *valeur, unsigned char degre = 2);	
 };
 
 class DiscoLed
@@ -38,7 +42,9 @@ class DiscoLed
 		Led * creerBandeCouleurUnie(Led couleur);
 		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
         Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);
-        Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);        
+        Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);
+		void decalerBande();
+		
         static Led * decalerBande(Led * bande, int nombre);
 };
 
