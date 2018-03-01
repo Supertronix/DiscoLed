@@ -164,9 +164,14 @@ Led * DiscoLed::dessinerBandeCouleurAlternee(Led * bandeCouleur, Led couleur1, L
 Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
 {
   Led * bandeCouleur = this->preparerBandeVide();
+  bandeCouleur = dessinerBandeRayee(bandeCouleur, couleur1, couleur2, epaisseur);
+  return bandeCouleur;
+}
+Led * DiscoLed::dessinerBandeRayee(Led* bandeCouleur, Led couleur1, Led couleur2, int epaisseur)
+{
   for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
   {
-    for(int position = 0; position < epaisseur; position+=2)
+    for(int position = 0; position < epaisseur; position++)
     {
         if((rayure+position)<this->nombre) bandeCouleur[rayure+position] = couleur1;
         if((rayure+position+epaisseur)<this->nombre) bandeCouleur[rayure+position+epaisseur] = couleur2;
@@ -305,5 +310,7 @@ void Spectacle::sauterAnimation()
 	Serial.println("sauterAnimation()");
 	this->listeAnimations[animationCourante]->liberer(this->discoled);
 	animationCourante++;
+	Serial.print("Animation courante "); Serial.println(animationCourante);
+	Serial.print("Nombre animation "); Serial.println(nombreAnimations);
 	if(animationCourante > nombreAnimations) animationCourante = 0;
 }

@@ -43,6 +43,7 @@ class DiscoLed
 		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
 		Led * dessinerBandeCouleurAlternee(Led * bandeCouleur, Led couleur1, Led couleur2);
         Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);
+		Led * dessinerBandeRayee(Led* bandeCouleur, Led couleur1, Led couleur2, int epaisseur);
         Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);
 		Led * dessinerBandeRayeeDouce(Led * bandeCouleur, Led couleur1, Led couleur2, int epaisseur);
 		
