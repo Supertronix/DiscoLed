@@ -30,7 +30,6 @@ class DiscoLed
 {
 	
 	protected:
-		//APA102<3,4>* bande;
 		APA102* bande;
 		int nombre;
 		int pin;
@@ -42,11 +41,15 @@ class DiscoLed
 		Led * preparerBandeVide();
 		Led * creerBandeCouleurUnie(Led couleur);
 		Led * creerBandeCouleurAlternee(Led couleur1, Led couleur2);
+		Led * dessinerBandeCouleurAlternee(Led * bandeCouleur, Led couleur1, Led couleur2);
         Led * creerBandeRayee(Led couleur1, Led couleur2, int epaisseur);
         Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);
+		Led * dessinerBandeRayeeDouce(Led * bandeCouleur, Led couleur1, Led couleur2, int epaisseur);
+		
 		void decalerBande();
 		
 		Led * pixels;
+		Led * pixels2;
 		
         static Led * decalerBande(Led * bande, int nombre);
 };
@@ -58,6 +61,7 @@ class Animation
 		int curseur = 0;
 		bool (*animer)(DiscoLed *);
 		void (*preparer)(DiscoLed *);
+		void (*liberer)(DiscoLed *);
 };
 
 class Spectacle

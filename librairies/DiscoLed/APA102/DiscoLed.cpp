@@ -103,12 +103,12 @@ DiscoLed::DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge)
 	//masque = digitalPinToBitMask(pin);
 	//port = portOutputRegister(digitalPinToPort(pin));
 	//portMode = portModeRegister(digitalPinToPort(pin));
-	//anneau = new WS2812(pin);
 	//anneau->setOutput(pin);
 	this->pin = pin;
 	this->horloge = horloge;
 	this->nombre = nombre;
 	this->pixels = new Led[this->nombre];
+	this->pixels2 = new Led[this->nombre];
 }
 
 const uint8_t brillance = 1;
@@ -142,6 +142,11 @@ Led * DiscoLed::creerBandeCouleurUnie(Led couleur)
 Led * DiscoLed::creerBandeCouleurAlternee(Led couleur1, Led couleur2)
 {
   Led * bandeCouleur = this->preparerBandeVide();
+  bandeCouleur = dessinerBandeCouleurAlternee(bandeCouleur, couleur1, couleur2);
+  return bandeCouleur;
+}
+Led * DiscoLed::dessinerBandeCouleurAlternee(Led * bandeCouleur, Led couleur1, Led couleur2)
+{
   for(int position = 0; position < this->nombre; position+=2)// possible car le nombre est pair
   {
     bandeCouleur[position] = couleur1;
@@ -176,6 +181,18 @@ Led * DiscoLed::creerBandeRayee(Led couleur1, Led couleur2, int epaisseur)
  */
 Led * DiscoLed::creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur)
 {
+  Led * bandeCouleur = this->preparerBandeVide();
+  bandeCouleur = dessinerBandeRayeeDouce(bandeCouleur, couleur1, couleur2, epaisseur);
+  return bandeCouleur;
+}
+
+/*
+ * Initialise la couleur des bandes
+ * Paramètres : couleurs des led
+ */
+Led * DiscoLed::dessinerBandeRayeeDouce(Led * bandeCouleur, Led couleur1, Led couleur2, int epaisseur)
+{
+  //Led * bandeCouleur = this->preparerBandeVide();
   Led couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur2);
   couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur12);
   couleur12 = FabriqueLed::trouverCouleurMilieu(couleur1, couleur12);
@@ -187,7 +204,12 @@ Led * DiscoLed::creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur)
   Serial.print("Bleu de couleur12 = ");
   Serial.println(couleur12.bleu);
   
-  Led * bandeCouleur = this->preparerBandeVide();
+  // temporaire
+  for(int position = 0; position < this->nombre; position++)
+  {
+	  bandeCouleur[position] = COULEUR_BLANC;
+  }
+  
   for(int rayure = 0; rayure < this->nombre; rayure+=2*epaisseur)
   {
     for(int position = 0; position < epaisseur; position++)
@@ -281,6 +303,7 @@ bool Spectacle::jouerAnimationSansSauter()
 void Spectacle::sauterAnimation()
 {
 	Serial.println("sauterAnimation()");
+	this->listeAnimations[animationCourante]->liberer(this->discoled);
 	animationCourante++;
 	if(animationCourante > nombreAnimations) animationCourante = 0;
 }
