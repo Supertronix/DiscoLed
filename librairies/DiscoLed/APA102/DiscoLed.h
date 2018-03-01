@@ -57,6 +57,7 @@ class Animation
 		int duree;
 		int curseur = 0;
 		bool (*animer)(DiscoLed *);
+		void (*preparer)(DiscoLed *);
 };
 
 class Spectacle

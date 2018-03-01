@@ -267,6 +267,7 @@ void Spectacle::jouerAnimation()
 {
 	if(nombreAnimations < 1) return false;
 	Serial.println(this->listeAnimations[animationCourante]->curseur);
+	if(this->listeAnimations[animationCourante]->curseur == 0) this->listeAnimations[animationCourante]->preparer(this->discoled);
 	this->listeAnimations[animationCourante]->animer(this->discoled);	
 	this->listeAnimations[animationCourante]->curseur++;
 	if(this->listeAnimations[animationCourante]->curseur >= this->listeAnimations[animationCourante]->duree) this->sauterAnimation();
