@@ -1,6 +1,5 @@
 void preparerFlash(DiscoLed* discoled)
 {
-  discoled->blanchir();
 }
 
 bool animerFlash(DiscoLed* discoled)

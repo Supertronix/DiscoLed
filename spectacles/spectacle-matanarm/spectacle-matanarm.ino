@@ -6,7 +6,8 @@
 #define NOMBRE 67
 
 DiscoLed discoled(NOMBRE, PIN, HORLOGE);
-Spectacle spectacle(&discoled); 
+Spectacle spectacleTeleop(&discoled); 
+Spectacle spectacleAutonome(&discoled); 
 Spectacle spectacleNiveau(&discoled); 
 Spectacle spectacleFlash(&discoled); 
 Led couleurAlliance = COULEUR_ROUGE;
@@ -15,15 +16,24 @@ uint8_t moment = 0;
 void setup() 
 {
   Serial.begin(9600);
+  
   Wire.begin(4);
   Wire.onReceive(recevoirCommandeRio);
 
+  ///////////////////////////////////////////////////
+  //////////////////   NIVEAU   /////////////////////
+  ///////////////////////////////////////////////////
+  
   Animation * animationNiveau = new Animation();
   animationNiveau->preparer = preparerNiveau;
   animationNiveau->animer = animerNiveau;
   animationNiveau->liberer = libererNiveau;
   animationNiveau->duree = 400;
   spectacleNiveau.ajouterAnimation(animationNiveau);
+  
+  ///////////////////////////////////////////////////
+  //////////////////   FLASH   //////////////////////
+  ///////////////////////////////////////////////////
 
   Animation * animationFlash = new Animation();
   animationFlash->preparer = preparerFlash;
@@ -32,19 +42,23 @@ void setup()
   animationFlash->duree = 400;
   spectacleFlash.ajouterAnimation(animationFlash);
 
+  ///////////////////////////////////////////////////
+  ////////////////   AUTONOME   /////////////////////
+  ///////////////////////////////////////////////////
+
   Animation * animationVagues = new Animation();
   animationVagues->preparer = preparerVagues;
   animationVagues->animer = animerVagues;
   animationVagues->liberer = libererVagues;
   animationVagues->duree = 400;
-  spectacle.ajouterAnimation(animationVagues);
+  spectacleAutonome.ajouterAnimation(animationVagues);
   
   Animation * animationAlternance = new Animation();  
   animationAlternance->preparer = preparerAlternance;  
   animationAlternance->animer = animerAlternance;  
   animationAlternance->liberer = libererAlternance;  
   animationAlternance->duree = 400;  
-  spectacle.ajouterAnimation(animationAlternance);  
+  spectacleAutonome.ajouterAnimation(animationAlternance);  
 
   Animation * animationCollision = new Animation();
   animationCollision->preparer = preparerCollision;
@@ -58,22 +72,35 @@ void setup()
   animationRayures->animer = animerRayures;
   animationRayures->liberer = libererRayures;
   animationRayures->duree = 400;
-  spectacle.ajouterAnimation(animationRayures);
+  spectacleAutonome.ajouterAnimation(animationRayures);
+
+  ///////////////////////////////////////////////////
+  //////////////////   TELEOP   /////////////////////
+  ///////////////////////////////////////////////////
 
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->preparer = preparerArcEnCiel;
   animationArcEnCiel->animer = animerArcEnCiel;
   animationArcEnCiel->liberer = libererArcEnCiel;
   animationArcEnCiel->duree = 4000;
-  spectacle.ajouterAnimation(animationArcEnCiel);
-  
+  spectacleTeleop.ajouterAnimation(animationArcEnCiel);
+
+/*
+  Animation * animationVide = new Animation();
+  animationVide->preparer = preparerVide;
+  animationVide->animer = animerVide;
+  animationVide->liberer = libererVide;
+  animationVide->duree = 400;
+  spectacleTeleop.ajouterAnimation(animationVide);
+*/
  }
 
-#define MODE_NORMAL 0
-#define MODE_NIVEAU 1
-#define MODE_FLASH 2
+#define MODE_TELEOP 0
+#define MODE_AUTONOME 1
+#define MODE_NIVEAU 2
+#define MODE_FLASH 3
 
-int mode = MODE_NORMAL;
+int mode = MODE_AUTONOME;
 int chariot = 0;
 
 void loop() 
@@ -86,12 +113,12 @@ void loop()
   
   switch(mode)
   {
-    case MODE_NORMAL : spectacle.jouerAnimation(); break; // arc-en-ciel + autres patterns
+    case MODE_TELEOP : spectacleTeleop.jouerAnimation(); break; // rien pour l'instant
+    case MODE_AUTONOME : spectacleAutonome.jouerAnimation(); break; // arc-en-ciel + autres patterns
     case MODE_NIVEAU : spectacleNiveau.jouerAnimation(); break; // niveau monte selon couleur de l'alliance
     case MODE_FLASH : spectacleFlash.jouerAnimation(); break; // clignote dans la couleur de l'alliance
-    default: spectacle.jouerAnimation(); break;
+    default: spectacleTeleop.jouerAnimation(); break;
   }
-  
   delay(1);
 }
 
