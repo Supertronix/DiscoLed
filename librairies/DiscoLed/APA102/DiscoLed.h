@@ -13,6 +13,12 @@ const Led COULEUR_BLANC = {100, 100, 100};
 const Led COULEUR_ROUGE = {100, 0, 0};
 const Led COULEUR_VERT = {0, 100, 0};
 const Led COULEUR_BLEU = {0, 0, 100};
+//Led orange = FabriqueLed::convertirHSV( 5, 255, 255); // RGB 255 21 0
+//Led rouge = FabriqueLed::convertirHSV( 0, 255, 255);
+//Led rose = FabriqueLed::convertirHSV( 350, 255, 255);
+//Led mauve = FabriqueLed::convertirHSV( 300, 255, 255);
+//Led vert = FabriqueLed::convertirHSV( 100, 255, 255);
+
 
 class FabriqueLed
 {
@@ -21,6 +27,7 @@ class FabriqueLed
 	static Led creerCouleur(int rouge, int vert, int bleu);
     static Led trouverCouleurMilieu(Led couleur1, Led couleur2);
 	static Led& palirSelonDegre(Led& led, unsigned char degre = 2);
+	static void afficherLed(Led& led);
 	
 	private:
 	static void palirCouleurSelonDegre(unsigned char *valeur, unsigned char degre = 2);	
@@ -48,6 +55,8 @@ class DiscoLed
 		Led * dessinerBandeRayeeDouce(Led * bandeCouleur, Led couleur1, Led couleur2, int epaisseur);
 		
 		void decalerBande();
+		void blanchir(Led * bande);
+		void blanchir();
 		
 		Led * pixels;
 		Led * pixels2;

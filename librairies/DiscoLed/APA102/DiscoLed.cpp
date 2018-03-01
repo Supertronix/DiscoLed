@@ -83,6 +83,13 @@ void FabriqueLed::palirCouleurSelonDegre(unsigned char *valeur, unsigned char de
   unsigned char palissement = *valeur >> degre;  // cree un ratio de la valeur
   *valeur -= palissement;  
 }
+void FabriqueLed::afficherLed(Led& led)
+{
+  Serial.print("rouge "); Serial.println(led.rouge);
+  Serial.print("vert "); Serial.println(led.vert);
+  Serial.print("bleu "); Serial.println(led.bleu);
+}
+
 
 
 
@@ -266,7 +273,21 @@ void DiscoLed::decalerBande()
   */
 }
 
+void DiscoLed::blanchir(Led * bande)
+{
+  for(int position; position < this->nombre-1; position++)
+  {
+    bande[position] = COULEUR_BLANC;
+  }
+}
 
+void DiscoLed::blanchir()
+{
+  for(int position; position < this->nombre-1; position++)
+  {
+    this->pixels[position] = COULEUR_BLANC;
+  }
+}
 
 #define TAILLE_SPECTACLE 8
 
