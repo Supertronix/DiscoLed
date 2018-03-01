@@ -45,6 +45,8 @@ class DiscoLed
         Led * creerBandeRayeeDouce(Led couleur1, Led couleur2, int epaisseur);
 		void decalerBande();
 		
+		Led * pixels;
+		
         static Led * decalerBande(Led * bande, int nombre);
 };
 

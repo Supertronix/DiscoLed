@@ -1,24 +1,4 @@
 #include "DiscoLed.h"
-
-DiscoLed::DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge)
-{	
-	bande = new APA102<3, 4>();
-	//masque = digitalPinToBitMask(pin);
-	//port = portOutputRegister(digitalPinToPort(pin));
-	//portMode = portModeRegister(digitalPinToPort(pin));
-	//anneau = new WS2812(pin);
-	//anneau->setOutput(pin);
-	this->pin = pin;
-	this->horloge = horloge;
-	this->nombre = nombre;
-}
-
-const uint8_t brillance = 1;
-void DiscoLed::afficher(Led* pixels)
-{
-  bande->write((rgb_color*)pixels, nombre, brillance);
-}
-
 // https://cs.stackexchange.com/questions/64549/convert-hsv-to-rgb-colors
 // https://en.wikipedia.org/wiki/HSL_and_HSV#Converting_to_RGB
 // https://gist.github.com/mjackson/5311256
@@ -103,6 +83,37 @@ void FabriqueLed::palirCouleurSelonDegre(unsigned char *valeur, unsigned char de
   unsigned char palissement = *valeur >> degre;  // cree un ratio de la valeur
   *valeur -= palissement;  
 }
+
+
+
+
+
+
+
+
+
+
+
+DiscoLed::DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge)
+{	
+	bande = new APA102<3, 4>();
+	//masque = digitalPinToBitMask(pin);
+	//port = portOutputRegister(digitalPinToPort(pin));
+	//portMode = portModeRegister(digitalPinToPort(pin));
+	//anneau = new WS2812(pin);
+	//anneau->setOutput(pin);
+	this->pin = pin;
+	this->horloge = horloge;
+	this->nombre = nombre;
+	this->pixels = new Led[this->nombre];
+}
+
+const uint8_t brillance = 1;
+void DiscoLed::afficher(Led* pixels)
+{
+  bande->write((rgb_color*)pixels, nombre, brillance);
+}
+
 
 
 
