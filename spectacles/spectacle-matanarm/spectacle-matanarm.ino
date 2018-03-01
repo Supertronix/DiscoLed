@@ -1,4 +1,5 @@
 #include <DiscoLed.h>
+#include <Wire.h>
 
 #define PIN 3
 #define HORLOGE 4
@@ -11,8 +12,9 @@ uint8_t moment;
 void setup() 
 {
   Serial.begin(9600);
-  //Serial.begin(9600);
-  //Serial.println("initialiserBandeDroite()");
+  Wire.begin(4);
+  Wire.onReceive(recevoirCommandeRio);
+  
 
   Animation * animationVagues = new Animation();
   animationVagues->preparer = preparerVagues;
@@ -35,21 +37,36 @@ void setup()
   animationAlternance->duree = 400;  
   spectacle.ajouterAnimation(animationAlternance);  
 
-/*
-  initialiserCollision(&discoledDroit);
   Animation * animationCollision = new Animation();
+  animationCollision->preparer = preparerCollision;
   animationCollision->animer = animerCollision;
+  animationCollision->liberer = libererCollision;
   animationCollision->duree = 400;
-  spectacleDroit.ajouterAnimation(animationCollision);
-  */
-}
-
+  //spectacle.ajouterAnimation(animationCollision);
+  
+  Animation * animationRayures = new Animation();
+  animationRayures->preparer = preparerRayures;
+  animationRayures->animer = animerRayures;
+  animationRayures->liberer = libererRayures;
+  animationRayures->duree = 400;
+  spectacle.ajouterAnimation(animationRayures);
+ }
 
 void loop() 
 {
   //Serial.println("bouclerBandeDroite()");
   spectacle.jouerAnimation();
   delay(1);
+}
+
+void recevoirCommandeRio(int nombre)
+{
+  Serial.println("recevoirCommandeRio()");
+  if(Wire.available())
+  {
+    char lettre = Wire.read();
+    Serial.println(lettre);
+  }
 }
 
 
