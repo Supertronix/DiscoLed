@@ -50,10 +50,13 @@ namespace Pololu
    * @param clockPin The Arduino pin number or name for the pin that will be
    *   used to control the APA102 clock input.
    */
-  template<uint8_t dataPin, uint8_t clockPin> class APA102 : public APA102Base
+  //template<uint8_t dataPin, uint8_t clockPin> 
+  class APA102 : public APA102Base
   {
+	  uint8_t dataPin;
+	  uint8_t clockPin;
   public:
-
+	APA102(uint8_t dataPin, uint8_t clockPin){this->dataPin = dataPin; this->clockPin = clockPin;}
     virtual void write(rgb_color * colors, uint16_t count, uint8_t brightness = 31)
     {
       startFrame();
