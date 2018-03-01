@@ -9,27 +9,38 @@ Spectacle spectacle(&discoled); // peut-etre plutot memoire dynamique
 
 uint8_t moment;
 
-Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
-Led * bandeBleuBlanc;
-Led * bandeBlancBleu;
-
-
 void setup() 
 {
   Serial.begin(9600);
   pixels = new Led[NOMBRE];
 
-  initialiserAlternance();
 
+  initialiserVagues();
+  Animation * animationVagues = new Animation();
+  animationVagues->animer = animerVagues;
+  animationVagues->duree = 400;
+  spectacle.ajouterAnimation(animationVagues);
+  
   Animation * animationArcEnCiel = new Animation();
   animationArcEnCiel->animer = animerArcEnCiel;
-  animationArcEnCiel->duree = 300;
+  animationArcEnCiel->duree = 100;
   spectacle.ajouterAnimation(animationArcEnCiel);
+
+/*
+  initialiserRayures();
+  Animation * animationRayures = new Animation();
+  animationRayures->animer = animerRayures;
+  animationRayures->duree = 200;
+  spectacle.ajouterAnimation(animationRayures);
+*/
+
+/* 
   
+  initialiserAlternance();
   Animation * animationAlternance = new Animation();
   animationAlternance->animer = animerAlternance;
-  animationAlternance->duree = 400;
-  spectacle.ajouterAnimation(animationAlternance);
+  animationAlternance->duree = 100;
+  spectacle.ajouterAnimation(animationAlternance);*/
 }
 
 

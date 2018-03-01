@@ -1,3 +1,7 @@
+Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
+Led * bandeBleuBlanc;
+Led * bandeBlancBleu;
+
 void initialiserAlternance()
 {
   bandeBleuBlanc = discoled.creerBandeCouleurAlternee(couleurBleuQuebec, COULEUR_BLANC); 
