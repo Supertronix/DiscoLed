@@ -96,7 +96,10 @@ void FabriqueLed::palirCouleurSelonDegre(unsigned char *valeur, unsigned char de
 
 DiscoLed::DiscoLed(int nombre, const uint8_t pin, const uint8_t horloge)
 {	
-	bande = new APA102<3, 4>();
+	// hack du a la limitation de la lib qui requiert des constantes
+	//if(pin == 3 && horloge == 4) bande = new APA102<3, 4>();
+	//else if(pin == 2 && horloge == 5) bande = new APA102<2, 5>();
+	this->bande = new APA102(pin, horloge);
 	//masque = digitalPinToBitMask(pin);
 	//port = portOutputRegister(digitalPinToPort(pin));
 	//portMode = portModeRegister(digitalPinToPort(pin));

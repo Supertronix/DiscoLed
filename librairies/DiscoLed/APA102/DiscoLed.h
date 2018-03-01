@@ -30,7 +30,8 @@ class DiscoLed
 {
 	
 	protected:
-		APA102<3,4> *bande;
+		//APA102<3,4>* bande;
+		APA102* bande;
 		int nombre;
 		int pin;
 		int horloge;
