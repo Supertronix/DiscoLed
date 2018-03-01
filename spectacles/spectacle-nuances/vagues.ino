@@ -1,7 +1,7 @@
 Led * bandeVague;
 
 int momentVagues = 0;
-int deltaVagues = 5;
+int deltaVagues = 10;
 
 void initialiserVagues()
 {
