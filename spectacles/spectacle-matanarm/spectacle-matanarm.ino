@@ -103,8 +103,17 @@ void setup()
 int mode = MODE_AUTONOME;
 int chariot = 0;
 
+#define INDICATEUR_ALLIANCE 5
+#define INDICATEUR_FLASH 6
+
+#define ALLIANCE_ROUGE 1
+#define ALLIANCE_BLEUE 0
+
 void loop() 
 {
+  pinMode(INDICATEUR_ALLIANCE, INPUT);  
+  //pinMode(INDICATEUR_FLASH, INPUT);  
+  
   //Serial.println("loop()");
   switch(mode)
   {
@@ -114,26 +123,32 @@ void loop()
     case MODE_FLASH: spectacleFlash.jouerAnimation();break;
     default: spectacleTeleop.jouerAnimation(); break;
   }
+  recevoirCommandeRio();
   delay(1);
 }
 
-void recevoirCommandeRio(int nombre)
+void recevoirCommandeRio()
 {
   Serial.println("recevoirCommandeRio()");
-  if(Wire.available())
+
+  int valeurAlliance = digitalRead(INDICATEUR_ALLIANCE);
+  Serial.print("valeurAlliance "); Serial.println(valeurAlliance);
+  if(valeurAlliance == ALLIANCE_ROUGE) couleurAlliance = COULEUR_ROUGE;
+  else couleurAlliance = COULEUR_BLEU;
+  
+  int valeurFlash = digitalRead(INDICATEUR_FLASH);
+  Serial.print("valeurFlash "); Serial.println(valeurFlash);
+  if(valeurFlash) mode = MODE_FLASH;
+  else mode = MODE_TELEOP;
+  /*switch(lettre)
   {
-    char lettre = Wire.read();
-    Serial.print("Lettre recue "); Serial.println(lettre);
-    switch(lettre)
-    {
-      case 'r': case 'R': couleurAlliance = COULEUR_ROUGE; break;
-      case 'b': case 'B': couleurAlliance = COULEUR_BLEU; break;
-      case 'a': case 'A': mode = MODE_AUTONOME; break;
-      case 't': case 'T': mode = MODE_TELEOP; break;
-      case 'n': case 'N': mode = MODE_NIVEAU; break;
-      case 'f': case 'F': mode = MODE_FLASH; break;
-    }
-  }
+    case 'r': case 'R': couleurAlliance = COULEUR_ROUGE; break;
+    case 'b': case 'B': couleurAlliance = COULEUR_BLEU; break;
+    case 'a': case 'A': mode = MODE_AUTONOME; break;
+    case 't': case 'T': mode = MODE_TELEOP; break;
+    case 'n': case 'N': mode = MODE_NIVEAU; break;
+    case 'f': case 'F': mode = MODE_FLASH; break;
+  }*/
 }
 
 
