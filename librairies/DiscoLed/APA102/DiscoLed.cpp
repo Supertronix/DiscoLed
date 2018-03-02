@@ -49,18 +49,18 @@ Led FabriqueLed::creerCouleur(int rouge, int vert, int bleu)
 
 Led FabriqueLed::trouverCouleurMilieu(Led couleur1, Led couleur2)
 {
-  Serial.print("Rouge de couleur1 = ");
-  Serial.println(couleur1.rouge);
-  Serial.print("Vert de couleur1 = ");
-  Serial.println(couleur1.vert);
-  Serial.print("Bleu de couleur1 = ");
-  Serial.println(couleur1.bleu);
-  Serial.print("Rouge de couleur2 = ");
-  Serial.println(couleur2.rouge);
-  Serial.print("Vert de couleur2 = ");
-  Serial.println(couleur2.vert);
-  Serial.print("Bleu de couleur2 = ");
-  Serial.println(couleur2.bleu);
+  //Serial.print("Rouge de couleur1 = ");
+  //Serial.println(couleur1.rouge);
+  //Serial.print("Vert de couleur1 = ");
+  //Serial.println(couleur1.vert);
+  //Serial.print("Bleu de couleur1 = ");
+  //Serial.println(couleur1.bleu);
+  //Serial.print("Rouge de couleur2 = ");
+  //Serial.println(couleur2.rouge);
+  //Serial.print("Vert de couleur2 = ");
+  //Serial.println(couleur2.vert);
+  //Serial.print("Bleu de couleur2 = ");
+  //Serial.println(couleur2.bleu);
     
     
     Led nouvellecouleur;
@@ -85,9 +85,9 @@ void FabriqueLed::palirCouleurSelonDegre(unsigned char *valeur, unsigned char de
 }
 void FabriqueLed::afficherLed(Led& led)
 {
-  Serial.print("rouge "); Serial.println(led.rouge);
-  Serial.print("vert "); Serial.println(led.vert);
-  Serial.print("bleu "); Serial.println(led.bleu);
+  //Serial.print("rouge "); Serial.println(led.rouge);
+  //Serial.print("vert "); Serial.println(led.vert);
+  //Serial.print("bleu "); Serial.println(led.bleu);
 }
 
 
@@ -314,7 +314,7 @@ void Spectacle::ajouterAnimation(Animation * animation)
 void Spectacle::jouerAnimation()
 {
 	if(nombreAnimations < 1) return false;
-	Serial.println(this->listeAnimations[animationCourante]->curseur);
+	//Serial.println(this->listeAnimations[animationCourante]->curseur);
 	if(this->listeAnimations[animationCourante]->curseur == 0) this->listeAnimations[animationCourante]->preparer(this->discoled);
 	this->listeAnimations[animationCourante]->animer(this->discoled);	
 	this->listeAnimations[animationCourante]->curseur++;
