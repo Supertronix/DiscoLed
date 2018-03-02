@@ -5,7 +5,7 @@ int momentVagues = 0;
 
 void preparerVagues(DiscoLed* discoled)
 {
-  bandeVague = discoled->dessinerBandeRayeeDouce(discoled->pixels, COULEUR_ROUGE, COULEUR_BLANC, 5); 
+  bandeVague = discoled->dessinerBandeRayeeDouce(discoled->pixels, couleurAlliance, COULEUR_BLANC, 5); 
   discoled->pixels = bandeVague;
 }
 

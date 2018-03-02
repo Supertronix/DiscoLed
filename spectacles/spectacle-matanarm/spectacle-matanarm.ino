@@ -1,5 +1,4 @@
 #include <DiscoLed.h>
-#include <Wire.h>
 
 #define PIN 3
 #define HORLOGE 4
@@ -17,9 +16,6 @@ void setup()
 {
   Serial.begin(9600);
   
-  Wire.begin(4);
-  Wire.onReceive(recevoirCommandeRio);
-
   ///////////////////////////////////////////////////
   //////////////////   NIVEAU   /////////////////////
   ///////////////////////////////////////////////////
@@ -53,13 +49,6 @@ void setup()
   animationVagues->duree = 400;
   spectacleAutonome.ajouterAnimation(animationVagues);
   
-  Animation * animationAlternance = new Animation();  
-  animationAlternance->preparer = preparerAlternance;  
-  animationAlternance->animer = animerAlternance;  
-  animationAlternance->liberer = libererAlternance;  
-  animationAlternance->duree = 400;  
-  spectacleAutonome.ajouterAnimation(animationAlternance);  
-
   Animation * animationCollision = new Animation();
   animationCollision->preparer = preparerCollision;
   animationCollision->animer = animerCollision;
@@ -73,6 +62,13 @@ void setup()
   animationRayures->liberer = libererRayures;
   animationRayures->duree = 400;
   spectacleAutonome.ajouterAnimation(animationRayures);
+
+  Animation * animationAlternance = new Animation();  
+  animationAlternance->preparer = preparerAlternance;  
+  animationAlternance->animer = animerAlternance;  
+  animationAlternance->liberer = libererAlternance;  
+  animationAlternance->duree = 400;  
+  spectacleAutonome.ajouterAnimation(animationAlternance);  
 
   ///////////////////////////////////////////////////
   //////////////////   TELEOP   /////////////////////
@@ -105,9 +101,13 @@ int chariot = 0;
 
 #define INDICATEUR_ALLIANCE 5
 #define INDICATEUR_FLASH 6
+#define INDICATEUR_MODE 7
 
 #define ALLIANCE_ROUGE 1
 #define ALLIANCE_BLEUE 0
+int valeurFlash = 0;
+int valeurAlliance = 0;
+int valeurMode = 0;
 
 void loop() 
 {
@@ -131,24 +131,27 @@ void recevoirCommandeRio()
 {
   Serial.println("recevoirCommandeRio()");
 
-  int valeurAlliance = digitalRead(INDICATEUR_ALLIANCE);
-  Serial.print("valeurAlliance "); Serial.println(valeurAlliance);
+  valeurAlliance = digitalRead(INDICATEUR_ALLIANCE);
+  Serial.print("valeur alliance "); Serial.println(valeurAlliance);
   if(valeurAlliance == ALLIANCE_ROUGE) couleurAlliance = COULEUR_ROUGE;
   else couleurAlliance = COULEUR_BLEU;
+
+  valeurMode = digitalRead(INDICATEUR_MODE);
+  Serial.print("valeur mode "); Serial.println(valeurMode);
+  if(valeurMode) mode = MODE_TELEOP;
+  else mode = MODE_AUTONOME;
   
-  int valeurFlash = digitalRead(INDICATEUR_FLASH);
-  Serial.print("valeurFlash "); Serial.println(valeurFlash);
+  valeurFlash = digitalRead(INDICATEUR_FLASH);
+  Serial.print("valeur flash "); Serial.println(valeurFlash);
   if(valeurFlash) mode = MODE_FLASH;
-  else mode = MODE_TELEOP;
-  /*switch(lettre)
+
+  switch(mode)
   {
-    case 'r': case 'R': couleurAlliance = COULEUR_ROUGE; break;
-    case 'b': case 'B': couleurAlliance = COULEUR_BLEU; break;
-    case 'a': case 'A': mode = MODE_AUTONOME; break;
-    case 't': case 'T': mode = MODE_TELEOP; break;
-    case 'n': case 'N': mode = MODE_NIVEAU; break;
-    case 'f': case 'F': mode = MODE_FLASH; break;
-  }*/
+    case MODE_AUTONOME : Serial.println("Mode autonome"); break;
+    case MODE_TELEOP : Serial.println("Mode teleop"); break;
+    case MODE_FLASH : Serial.println("Mode flash"); break;
+    case MODE_NIVEAU : Serial.println("Mode niveau"); break;
+  }
 }
 
 

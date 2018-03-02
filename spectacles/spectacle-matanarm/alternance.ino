@@ -1,12 +1,12 @@
-Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
+//Led couleurBleuQuebec = {.rouge = 0, .vert = 92, .bleu = 22};
 Led * bandeBleuBlanc;
 Led * bandeBlancBleu;
 
 void preparerAlternance(DiscoLed * discoled)
 {
   //delete discoled->pixels;
-  bandeBleuBlanc = discoled->dessinerBandeCouleurAlternee(discoled->pixels, couleurBleuQuebec, COULEUR_BLANC); 
-  bandeBlancBleu = discoled->dessinerBandeCouleurAlternee(discoled->pixels2, COULEUR_BLANC, couleurBleuQuebec); 
+  bandeBleuBlanc = discoled->dessinerBandeCouleurAlternee(discoled->pixels, couleurAlliance, COULEUR_BLANC); 
+  bandeBlancBleu = discoled->dessinerBandeCouleurAlternee(discoled->pixels2, COULEUR_BLANC, couleurAlliance); 
 }
 
 bool animerAlternance(DiscoLed * discoled)

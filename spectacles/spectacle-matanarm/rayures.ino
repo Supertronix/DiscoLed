@@ -4,7 +4,7 @@ int momentRayures = 0;
 
 void preparerRayures(DiscoLed * discoled)
 {
-  discoled->pixels = discoled->dessinerBandeRayee(discoled->pixels, COULEUR_ROUGE, COULEUR_BLANC, 5); 
+  discoled->pixels = discoled->dessinerBandeRayee(discoled->pixels, couleurAlliance, COULEUR_BLANC, 5); 
 }
 
 
