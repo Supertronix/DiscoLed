@@ -9,12 +9,14 @@ Spectacle spectacleTeleop(&discoled);
 Spectacle spectacleAutonome(&discoled); 
 Spectacle spectacleNiveau(&discoled); 
 Spectacle spectacleFlash(&discoled); 
-Led couleurAlliance = COULEUR_ROUGE;
 uint8_t moment = 0;
 
 void setup() 
 {
   Serial.begin(9600);
+  //pinMode(INDICATEUR_ALLIANCE, INPUT);  
+  //pinMode(INDICATEUR_FLASH, INPUT);  
+  //pinMode(INDICATEUR_MODE, INPUT);  
   
   ///////////////////////////////////////////////////
   //////////////////   NIVEAU   /////////////////////
@@ -54,7 +56,7 @@ void setup()
   animationCollision->animer = animerCollision;
   animationCollision->liberer = libererCollision;
   animationCollision->duree = 50;
-  spectacleAutonome.ajouterAnimation(animationCollision);
+  //spectacleAutonome.ajouterAnimation(animationCollision);
   
   Animation * animationRayures = new Animation();
   animationRayures->preparer = preparerRayures;
@@ -62,8 +64,6 @@ void setup()
   animationRayures->liberer = libererRayures;
   animationRayures->duree = 100;
   spectacleAutonome.ajouterAnimation(animationRayures);
-
-  //spectacleAutonome.ajouterAnimation(animationCollision);
 
   Animation * animationAlternance = new Animation();  
   animationAlternance->preparer = preparerAlternance;  
@@ -110,11 +110,11 @@ int chariot = 0;
 int valeurFlash = 0;
 int valeurAlliance = 0;
 int valeurMode = 0;
+Led couleurAlliance = COULEUR_ROUGE;
 
 void loop() 
 {
-  pinMode(INDICATEUR_ALLIANCE, INPUT);  
-  //pinMode(INDICATEUR_FLASH, INPUT);  
+  recevoirCommandeRio();
   
   //Serial.println("loop()");
   switch(mode)
@@ -125,7 +125,6 @@ void loop()
     case MODE_FLASH: spectacleFlash.jouerAnimation();break;
     default: spectacleTeleop.jouerAnimation(); break;
   }
-  recevoirCommandeRio();
   delay(1);
 }
 
