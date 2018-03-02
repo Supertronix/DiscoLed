@@ -76,7 +76,7 @@ void rougirIntervalle(Led * pixels, int debut, int fin)
 {
     for (int i = debut; i < fin-1; i++)
     {
-        pixels[i] = FabriqueLed::creerCouleur(255, 0, 0);      
+        pixels[i] = couleurAlliance;      
         pixels[NOMBRE - i - 1] = pixels[i];
     }  
 }

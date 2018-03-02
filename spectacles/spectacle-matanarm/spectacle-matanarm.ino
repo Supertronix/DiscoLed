@@ -46,28 +46,30 @@ void setup()
   animationVagues->preparer = preparerVagues;
   animationVagues->animer = animerVagues;
   animationVagues->liberer = libererVagues;
-  animationVagues->duree = 400;
+  animationVagues->duree = 100;
   spectacleAutonome.ajouterAnimation(animationVagues);
   
   Animation * animationCollision = new Animation();
   animationCollision->preparer = preparerCollision;
   animationCollision->animer = animerCollision;
   animationCollision->liberer = libererCollision;
-  animationCollision->duree = 400;
-  //spectacle.ajouterAnimation(animationCollision);
+  animationCollision->duree = 50;
+  spectacleAutonome.ajouterAnimation(animationCollision);
   
   Animation * animationRayures = new Animation();
   animationRayures->preparer = preparerRayures;
   animationRayures->animer = animerRayures;
   animationRayures->liberer = libererRayures;
-  animationRayures->duree = 400;
+  animationRayures->duree = 100;
   spectacleAutonome.ajouterAnimation(animationRayures);
+
+  //spectacleAutonome.ajouterAnimation(animationCollision);
 
   Animation * animationAlternance = new Animation();  
   animationAlternance->preparer = preparerAlternance;  
   animationAlternance->animer = animerAlternance;  
   animationAlternance->liberer = libererAlternance;  
-  animationAlternance->duree = 400;  
+  animationAlternance->duree = 100;  
   spectacleAutonome.ajouterAnimation(animationAlternance);  
 
   ///////////////////////////////////////////////////
